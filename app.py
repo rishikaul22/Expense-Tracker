@@ -99,6 +99,11 @@ class UserExpense(Resource):
         return {'data': expense_data}
 
 
+@app.before_first_request
+def create_tables():
+    db.create_all()
+
+
 api = Api(app)
 api.add_resource(UserExpense, "/<int:user_id>")
 api.add_resource(UserRegister, "/register")
