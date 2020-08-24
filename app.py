@@ -75,7 +75,9 @@ class UserLogin(Resource):
     def post(self):
         data = request.get_json()
         user = User.query.filter_by(username = data['username']).first()
-        print(user.password)
+#         print(user.password)
+        if user is None:
+            return {'message':'User doesn\'t exist.'}
         if user and safe_str_cmp(user.password, data['password']):
             access_token = create_access_token(identity=user.id, expires_delta = datetime.timedelta(minutes=30))
             #refresh_token = create_refresh_token(user.id)
