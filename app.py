@@ -8,8 +8,8 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'assembler'
 
 basedir = os.path.abspath(os.path.dirname(__file__))
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + \
-    os.path.join(basedir, 'data.sqlite')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///' +
+                                                       os.path.join(basedir, 'data.sqlite'))
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
@@ -99,9 +99,9 @@ class UserExpense(Resource):
         return {'data': expense_data}
 
 
-@app.before_first_request
-def create_tables():
-    db.create_all()
+# @app.before_first_request
+# def create_tables():
+#     db.create_all()
 
 
 api = Api(app)
