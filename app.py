@@ -57,7 +57,9 @@ class Expense(db.Model):
     description = db.Column(db.Text, nullable=False)
     amount = db.Column(db.Integer, nullable=False)
     type = db.Column(db.String(20), nullable=False)
-    date = db.Column(db.DateTime ,nullable = False)
+    day = db.Column(db.Float ,nullable = False)
+    month = db.Column(db.Float ,nullable = False)
+    year = db.Column(db.Float ,nullable = False)
     user_id = db.Column(db.Integer, db.ForeignKey(
         'user.id'), nullable=False)
 
@@ -83,13 +85,62 @@ class UserLogin(Resource):
             return {'message': 'User doesn\'t exist.'}
         if user and safe_str_cmp(user.password, data['password']):
             access_token = create_access_token(
-                identity=user.id, expires_delta=datetime.timedelta(minutes=30))
+                identity=user.id, expires_delta=datetime.timedelta(hours=30))
             #refresh_token = create_refresh_token(user.id)
             return {
                 'access_token': access_token,
                 'id': user.id
             }, 200
         return {"message": 'Invalid credentials'}, 401
+
+import numpy as np
+import pandas as pd
+
+class DashBoard(Resource):
+
+    @jwt_required
+    def get(self,user_id):
+        user = User.query.get(user_id)
+        expense_list = Expense.query.all()
+        expense_data = []
+        print(expense_list)
+        if not (expense_list):
+            return {"message": 'What are you doing?'}
+        # for i in range(len(expense_list)):
+        #     expense_data.append({'description': expense_list[i].description,
+        #                          'amount': expense_list[i].amount,
+        #                          'day': expense_list[i].day,
+        #                          'month': expense_list[i].month,
+        #                          "year": expense_list[i].year,
+        #                          'type': expense_list[i].type})
+
+        for i in range(len(expense_list)):
+            expense_data.append({'description': expense_list[i].description,
+                                 'day': expense_list[i].day,
+                                 'month': expense_list[i].month,
+                                 'amount': expense_list[i].amount,
+                                 "year": expense_list[i].year,
+                                 'type': expense_list[i].type})
+        print(expense_data)
+        df = pd.DataFrame.from_dict(expense_data)
+        print(df)
+        income = df.loc[df['type']=='Income']['amount'].sum()
+        expense = df.loc[df['type']=='Expense']['amount'].sum()
+        incomedf = pd.DataFrame(df.loc[df['type']=='Income'])[['month','amount']].to_dict()
+        expensedf = pd.DataFrame(df.loc[df['type']=='Expense'])[['month','amount']].to_dict()
+        print(incomedf)
+        print(expensedf)
+        #print(type(int(income)))
+        print(expense)
+        wallet = income - expense
+        return {
+            "name": user.name,
+            "income": float(income),
+            "expense": float(expense), 
+            "wallet" : float(wallet),
+            "incomedf": incomedf,
+            "expensedf": expensedf
+        }
 
 
 class UserExpense(Resource):
@@ -98,7 +149,7 @@ class UserExpense(Resource):
     def post(self, user_id):
         data = request.get_json()
         expense = Expense(user_id=user_id,
-                          description=data['description'], amount=data['amount'], type=data['type'],date = data['date'])
+                          description=data['description'], amount=data['amount'], type=data['type'],day = data['day'], month= data['month'], year = data['year'])
         db.session.add(expense)
         db.session.commit()
 
@@ -115,7 +166,9 @@ class UserExpense(Resource):
         for i in range(len(expense)):
             expense_data.append({'description': expense[i].description,
                                  'amount': expense[i].amount,
-                                 'date': expense[i].date,
+                                 'day': expense[i].day,
+                                 'month': expense[i].month,
+                                 "year": expense[i].year,
                                  'type': expense[i].type})
 
         return {'data': expense_data}
@@ -207,6 +260,7 @@ api.add_resource(GetAllExpenses, "/getAll")
 api.add_resource(UserRegister, "/register")
 api.add_resource(UserLogin, "/login")
 api.add_resource(UserLogout, "/logout")
+api.add_resource(DashBoard, '/dashboard/<int:user_id>')
 
 if __name__ == "__main__":
     app.run(debug=True)
