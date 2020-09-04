@@ -57,6 +57,7 @@ class Expense(db.Model):
     description = db.Column(db.Text, nullable=False)
     amount = db.Column(db.Integer, nullable=False)
     type = db.Column(db.String(20), nullable=False)
+    date = db.Column(db.DateTime ,nullable = False)
     user_id = db.Column(db.Integer, db.ForeignKey(
         'user.id'), nullable=False)
 
@@ -97,7 +98,7 @@ class UserExpense(Resource):
     def post(self, user_id):
         data = request.get_json()
         expense = Expense(user_id=user_id,
-                          description=data['description'], amount=data['amount'], type=data['type'])
+                          description=data['description'], amount=data['amount'], type=data['type'],date = data['date'])
         db.session.add(expense)
         db.session.commit()
 
@@ -114,6 +115,7 @@ class UserExpense(Resource):
         for i in range(len(expense)):
             expense_data.append({'description': expense[i].description,
                                  'amount': expense[i].amount,
+                                 'date': expense[i].date,
                                  'type': expense[i].type})
 
         return {'data': expense_data}
