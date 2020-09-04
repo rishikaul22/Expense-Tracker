@@ -23,9 +23,11 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 Migrate(app, db)
 
-app.config['JWT_SECRET_KEY'] = 'jose'  # we can also use app.secret like before, Flask-JWT-Extended can recognize both
+# we can also use app.secret like before, Flask-JWT-Extended can recognize both
+app.config['JWT_SECRET_KEY'] = 'jose'
 app.config['JWT_BLACKLIST_ENABLED'] = True  # enable blacklist feature
-app.config['JWT_BLACKLIST_TOKEN_CHECKS'] = ['access']  # allow blacklisting for access and refresh tokens
+# allow blacklisting for access and refresh tokens
+app.config['JWT_BLACKLIST_TOKEN_CHECKS'] = ['access']
 jwt = JWTManager(app)
 
 ########### MODELS ##########
@@ -74,18 +76,20 @@ class UserRegister(Resource):
 class UserLogin(Resource):
     def post(self):
         data = request.get_json()
-        user = User.query.filter_by(username = data['username']).first()
+        user = User.query.filter_by(username=data['username']).first()
 #         print(user.password)
         if user is None:
-            return {'message':'User doesn\'t exist.'}
+            return {'message': 'User doesn\'t exist.'}
         if user and safe_str_cmp(user.password, data['password']):
-            access_token = create_access_token(identity=user.id, expires_delta = datetime.timedelta(minutes=30))
+            access_token = create_access_token(
+                identity=user.id, expires_delta=datetime.timedelta(minutes=30))
             #refresh_token = create_refresh_token(user.id)
             return {
                 'access_token': access_token,
-                'id':user.id
+                'id': user.id
             }, 200
         return {"message": 'Invalid credentials'}, 401
+
 
 class UserExpense(Resource):
 
@@ -114,6 +118,7 @@ class UserExpense(Resource):
 
         return {'data': expense_data}
 
+
 class UserLogout(Resource):
 
     @jwt_required
@@ -121,6 +126,7 @@ class UserLogout(Resource):
         jti = get_raw_jwt()['jti']
         BLACKLIST.append(jti)
         return {"message": "Successfully logged out"}, 200
+
 
 class GetAllExpenses(Resource):
 
@@ -140,10 +146,10 @@ class GetAllExpenses(Resource):
         return {'data': expense_data}
 
 
-
 @jwt.token_in_blacklist_loader
 def check_if_token_in_blacklist(decrypted_token):
     return decrypted_token['jti'] in BLACKLIST
+
 
 @jwt.expired_token_loader
 def expired_token_callback():
@@ -154,7 +160,8 @@ def expired_token_callback():
 
 
 @jwt.invalid_token_loader
-def invalid_token_callback(error):  # we have to keep the argument here, since it's passed in by the caller internally
+# we have to keep the argument here, since it's passed in by the caller internally
+def invalid_token_callback(error):
     return jsonify({
         'message': 'Signature verification failed.',
         'error': 'invalid_token'
