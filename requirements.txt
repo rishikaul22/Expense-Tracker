@@ -7,3 +7,4 @@ uwsgi
 psycopg2
 numpy
 flask-cors
+pandas
