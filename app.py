@@ -5,7 +5,7 @@ from flask import Flask, request, jsonify, make_response, abort
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_restful import Resource, Api
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 #from functools import wraps
 #from flask_jwt import JWT, jwt_required, current_identity
 from flask_jwt_extended import create_access_token, jwt_required, get_raw_jwt
@@ -15,7 +15,7 @@ from werkzeug.security import safe_str_cmp
 import datetime
 
 app = Flask(__name__)
-cors = CORS(app)
+cors = CORS(app, support_credentials=True)
 app.config['SECRET_KEY'] = 'assembler'
 
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -70,6 +70,7 @@ class Expense(db.Model):
 
 ### API's ###
 class UserRegister(Resource):
+    @cross_origin(support_credentials=True)
     def post(self):
         data = request.get_json()
         user = User(
@@ -81,6 +82,7 @@ class UserRegister(Resource):
 
 
 class UserLogin(Resource):
+    @cross_origin(origin='*', support_credentials=True)
     def post(self):
         data = request.get_json()
         user = User.query.filter_by(username=data['username']).first()
@@ -101,6 +103,7 @@ class UserLogin(Resource):
 class DashBoard(Resource):
 
     @jwt_required
+    @cross_origin(origin='*', support_credentials=True)
     def get(self, user_id):
         user = User.query.get(user_id)
         expense_list = Expense.query.all()
@@ -150,6 +153,7 @@ class DashBoard(Resource):
 class UserExpense(Resource):
 
     @jwt_required
+    @cross_origin(origin='*', support_credentials=True)
     def post(self, user_id):
         data = request.get_json()
         expense = Expense(user_id=user_id,
@@ -160,6 +164,7 @@ class UserExpense(Resource):
         return {'message': 'Expense added successfully'}
 
     @jwt_required
+    @cross_origin(origin='*', support_credentials=True)
     def get(self, user_id):
         expense = Expense.query.filter_by(user_id=user_id).all()
         expense_data = []
@@ -181,6 +186,7 @@ class UserExpense(Resource):
 class UserLogout(Resource):
 
     @jwt_required
+    @cross_origin(origin='*', support_credentials=True)
     def post(self):
         jti = get_raw_jwt()['jti']
         BLACKLIST.append(jti)
@@ -190,6 +196,7 @@ class UserLogout(Resource):
 class GetAllExpenses(Resource):
 
     @jwt_required
+    @cross_origin(origin='*', support_credentials=True)
     def get(self):
         expense_list = Expense.query.all()
         expense_data = []
