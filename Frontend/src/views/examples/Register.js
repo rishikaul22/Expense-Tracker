@@ -51,6 +51,9 @@ class Register extends React.Component {
       name: this.state.registerName,
       password: this.state.registerPassword
     }
+    let config = {
+
+    }
 
     console.log(user)
     const res = await axios.post('https://rpk-expense-tracker.herokuapp.com/register', user).then((response) => {
