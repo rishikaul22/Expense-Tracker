@@ -1,8 +1,11 @@
+import numpy as np
+import pandas as pd
 import os
 from flask import Flask, request, jsonify, make_response, abort
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_restful import Resource, Api
+
 #from functools import wraps
 #from flask_jwt import JWT, jwt_required, current_identity
 from flask_jwt_extended import create_access_token, jwt_required, get_raw_jwt
@@ -57,9 +60,9 @@ class Expense(db.Model):
     description = db.Column(db.Text, nullable=False)
     amount = db.Column(db.Integer, nullable=False)
     type = db.Column(db.String(20), nullable=False)
-    day = db.Column(db.Float ,nullable = False)
-    month = db.Column(db.Float ,nullable = False)
-    year = db.Column(db.Float ,nullable = False)
+    day = db.Column(db.Float, nullable=False)
+    month = db.Column(db.Float, nullable=False)
+    year = db.Column(db.Float, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey(
         'user.id'), nullable=False)
 
@@ -93,13 +96,11 @@ class UserLogin(Resource):
             }, 200
         return {"message": 'Invalid credentials'}, 401
 
-import numpy as np
-import pandas as pd
 
 class DashBoard(Resource):
 
     @jwt_required
-    def get(self,user_id):
+    def get(self, user_id):
         user = User.query.get(user_id)
         expense_list = Expense.query.all()
         expense_data = []
@@ -124,20 +125,22 @@ class DashBoard(Resource):
         print(expense_data)
         df = pd.DataFrame.from_dict(expense_data)
         print(df)
-        income = df.loc[df['type']=='Income']['amount'].sum()
-        expense = df.loc[df['type']=='Expense']['amount'].sum()
-        incomedf = pd.DataFrame(df.loc[df['type']=='Income'])[['month','amount']].to_dict()
-        expensedf = pd.DataFrame(df.loc[df['type']=='Expense'])[['month','amount']].to_dict()
+        income = df.loc[df['type'] == 'Income']['amount'].sum()
+        expense = df.loc[df['type'] == 'Expense']['amount'].sum()
+        incomedf = pd.DataFrame(df.loc[df['type'] == 'Income'])[
+            ['month', 'amount']].to_dict()
+        expensedf = pd.DataFrame(df.loc[df['type'] == 'Expense'])[
+            ['month', 'amount']].to_dict()
         print(incomedf)
         print(expensedf)
-        #print(type(int(income)))
+        # print(type(int(income)))
         print(expense)
         wallet = income - expense
         return {
             "name": user.name,
             "income": float(income),
-            "expense": float(expense), 
-            "wallet" : float(wallet),
+            "expense": float(expense),
+            "wallet": float(wallet),
             "incomedf": incomedf,
             "expensedf": expensedf
         }
@@ -149,7 +152,7 @@ class UserExpense(Resource):
     def post(self, user_id):
         data = request.get_json()
         expense = Expense(user_id=user_id,
-                          description=data['description'], amount=data['amount'], type=data['type'],day = data['day'], month= data['month'], year = data['year'])
+                          description=data['description'], amount=data['amount'], type=data['type'], day=data['day'], month=data['month'], year=data['year'])
         db.session.add(expense)
         db.session.commit()
 

@@ -32,14 +32,42 @@ import {
   Row,
   Col
 } from "reactstrap";
+import { Link } from "react-router-dom";
+import axios from "axios";
 
 class Register extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      registerName: '',
+      registerUsername: '',
+      registerPassword: ''
+    };
+  }
+
+  createUser = async () => {
+    let user = {
+      username: this.state.registerUsername,
+      name: this.state.registerName,
+      password: this.state.registerPassword
+    }
+
+    console.log(user)
+    const res = await axios.post('https://cors-anywhere.herokuapp.com/https://rpk-expense-tracker.herokuapp.com/register', user).then((response) => {
+      console.log(response)
+    }).catch((err) => {
+      console.log(err)
+    })
+
+
+  }
+
   render() {
     return (
       <>
         <Col lg="6" md="8">
           <Card className="bg-secondary shadow border-0">
-            <CardHeader className="bg-transparent pb-5">
+            {/* <CardHeader className="bg-transparent pb-5">
               <div className="text-muted text-center mt-2 mb-4">
                 <small>Sign up with</small>
               </div>
@@ -73,30 +101,36 @@ class Register extends React.Component {
                   <span className="btn-inner--text">Google</span>
                 </Button>
               </div>
-            </CardHeader>
+            </CardHeader> */}
             <CardBody className="px-lg-5 py-lg-5">
               <div className="text-center text-muted mb-4">
-                <small>Or sign up with credentials</small>
+                <h4 className='lead font-weight-bold'>Register</h4>
               </div>
               <Form role="form">
                 <FormGroup>
                   <InputGroup className="input-group-alternative mb-3">
                     <InputGroupAddon addonType="prepend">
                       <InputGroupText>
-                        <i className="ni ni-hat-3" />
+                        <i className="ni ni-single-02" />
                       </InputGroupText>
                     </InputGroupAddon>
-                    <Input placeholder="Name" type="text" />
+                    <Input placeholder="Name" type="text" onChange={(e) => {
+                      this.setState({ ...this.state, registerName: e.target.value })
+
+                    }} />
                   </InputGroup>
                 </FormGroup>
                 <FormGroup>
                   <InputGroup className="input-group-alternative mb-3">
                     <InputGroupAddon addonType="prepend">
                       <InputGroupText>
-                        <i className="ni ni-email-83" />
+                        <i className="ni ni-circle-08" />
                       </InputGroupText>
                     </InputGroupAddon>
-                    <Input placeholder="Email" type="email" autoComplete="new-email"/>
+                    <Input placeholder="Username" type="email" autoComplete="new-email" onChange={(e) => {
+                      this.setState({ ...this.state, registerUsername: e.target.value })
+
+                    }} />
                   </InputGroup>
                 </FormGroup>
                 <FormGroup>
@@ -106,15 +140,18 @@ class Register extends React.Component {
                         <i className="ni ni-lock-circle-open" />
                       </InputGroupText>
                     </InputGroupAddon>
-                    <Input placeholder="Password" type="password" autoComplete="new-password"/>
+                    <Input placeholder="Password" type="password" autoComplete="new-password" onChange={(e) => {
+                      this.setState({ ...this.state, registerPassword: e.target.value })
+
+                    }} />
                   </InputGroup>
                 </FormGroup>
-                <div className="text-muted font-italic">
+                {/* <div className="text-muted font-italic">
                   <small>
                     password strength:{" "}
                     <span className="text-success font-weight-700">strong</span>
                   </small>
-                </div>
+                </div> */}
                 <Row className="my-4">
                   <Col xs="12">
                     <div className="custom-control custom-control-alternative custom-checkbox">
@@ -123,7 +160,7 @@ class Register extends React.Component {
                         id="customCheckRegister"
                         type="checkbox"
                       />
-                      <label
+                      {/* <label
                         className="custom-control-label"
                         htmlFor="customCheckRegister"
                       >
@@ -133,18 +170,41 @@ class Register extends React.Component {
                             Privacy Policy
                           </a>
                         </span>
-                      </label>
+                      </label> */}
                     </div>
                   </Col>
                 </Row>
                 <div className="text-center">
-                  <Button className="mt-4" color="primary" type="button">
+                  <Button className="mt-1" color="primary" type="button" onClick={this.createUser}>
                     Create account
                   </Button>
                 </div>
               </Form>
+
+              <Row className="mt-3">
+                {/* <Col xs="6">
+              <a
+                className="text-light"
+                href="#pablo"
+                onClick={e => e.preventDefault()}
+              >
+                <small>Forgot password?</small>
+              </a>
+            </Col> */}
+
+                <Col className="text-center" xs="12">
+
+                  <button
+                    className="btn btn-link"
+                    onClick={e => e.preventDefault()}
+                  >
+                    <Link to='/auth/login'><small>Sign in</small></Link>
+                  </button>
+                </Col>
+              </Row>
             </CardBody>
           </Card>
+
         </Col>
       </>
     );
