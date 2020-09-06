@@ -62,51 +62,25 @@ class Index extends React.Component {
 
   names = ["Priyav", "Harsh", "Rahul", "Rishi", "Vrutik"];
 
-  incomeData = {
-    labels: ["Jan", "Feb", "March", "April", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-    datasets: [
-      {
-        label: "Performance",
-        data: [0, 20, 40, 30, 15, 200, 20, 60, 60, 90, 160, 100]
-      }
-    ]
-  };
-
-  expenseData = {
-    labels: ["Jan", "Feb", "March", "April", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-    datasets: [
-      {
-        label: "Performance",
-        data: [0, 40, 100, 80, 90, 50, 200]
-      }
-    ]
-  };
-
   constructor(props) {
     super(props);
     this.state = {
       activeNav: 1,
       chartExample1Data: "data1",
-      isIncome: true,
-      income : true
+      isIncome: true
     };
     if (window.Chart) {
       parseOptions(Chart, chartOptions());
     }
   }
-  toggleNavs = (e, index) => {
-    e.preventDefault();
-
-    this.setState({
-      ...this.state,
-      activeNav: index,
-      chartExample1Data:
-        this.state.chartExample1Data === "data1" ? "data2" : "data1",
-      income : index === 1 ? true : false
-    });
-
-    console.log(this.state.income);
-  };
+  // toggleNavs = (e, index) => {
+  //   e.preventDefault();
+  //   this.setState({
+  //     activeNav: index,
+  //     chartExample1Data:
+  //       this.state.chartExample1Data === "data1" ? "data2" : "data1"
+  //   });
+  // };
   render() {
     return (
       <>
@@ -122,9 +96,9 @@ class Index extends React.Component {
                       <h6 className="text-uppercase text-light ls-1 mb-1">
                         Overview
                       </h6>
-                      <h2 className="text-white mb-0">Transaction Analysis</h2>
+                      <h2 className="text-white mb-0">Sales value</h2>
                     </div>
-                    <div className="col">
+                    {/* <div className="col">
                       <Nav className="justify-content-end" pills>
                         <NavItem>
                           <NavLink
@@ -134,7 +108,7 @@ class Index extends React.Component {
                             href="#pablo"
                             onClick={e => this.toggleNavs(e, 1)}
                           >
-                            <span className="d-none d-md-block">Income</span>
+                            <span className="d-none d-md-block">Month</span>
                             <span className="d-md-none">M</span>
                           </NavLink>
                         </NavItem>
@@ -147,20 +121,19 @@ class Index extends React.Component {
                             href="#pablo"
                             onClick={e => this.toggleNavs(e, 2)}
                           >
-                            <span className="d-none d-md-block">Expense</span>
+                            <span className="d-none d-md-block">Week</span>
                             <span className="d-md-none">W</span>
                           </NavLink>
                         </NavItem>
                       </Nav>
-                    </div>
+                    </div> */}
                   </Row>
                 </CardHeader>
                 <CardBody>
                   {/* Chart */}
                   <div className="chart">
                     <Line
-                      data = {this.state.income === true ? this.incomeData : this.expenseData}
-                      //data={chartExample1[this.state.chartExample1Data]}
+                      data={chartExample1[this.state.chartExample1Data]}
                       options={chartExample1.options}
                       getDatasetAtEvent={e => console.log(e)}
                     />
@@ -257,7 +230,7 @@ class Index extends React.Component {
             </Col >
           </Row >
           <Row className="mt-5">
-            <Col className="mb-5 mb-xl-0" xl="12">
+            <Col className="mb-5 mb-xl-0" xl="8">
               <Card className="shadow">
                 <CardHeader className="border-0">
                   <Row className="align-items-center">
@@ -348,7 +321,7 @@ class Index extends React.Component {
                 </Table>
               </Card>
             </Col>
-            {/* <Col xl="4">
+            <Col xl="4">
               <Card className="shadow">
                 <CardHeader className="border-0">
                   <Row className="align-items-center">
@@ -455,7 +428,7 @@ class Index extends React.Component {
                   </tbody>
                 </Table>
               </Card>
-            </Col> */}
+            </Col>
           </Row>
         </Container >
       </>

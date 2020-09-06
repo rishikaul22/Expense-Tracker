@@ -96,16 +96,15 @@ class Index extends React.Component {
   }
   toggleNavs = (e, index) => {
     e.preventDefault();
-
     this.setState({
       ...this.state,
       activeNav: index,
       chartExample1Data:
         this.state.chartExample1Data === "data1" ? "data2" : "data1",
-      income : index === 1 ? true : false
+      income : index === 1 ? true ? false
     });
 
-    console.log(this.state.income);
+    console.log(!this.state.income);
   };
   render() {
     return (
@@ -159,7 +158,7 @@ class Index extends React.Component {
                   {/* Chart */}
                   <div className="chart">
                     <Line
-                      data = {this.state.income === true ? this.incomeData : this.expenseData}
+                      data = {this.state.income ? this.incomeData : this.expenseData}
                       //data={chartExample1[this.state.chartExample1Data]}
                       options={chartExample1.options}
                       getDatasetAtEvent={e => console.log(e)}

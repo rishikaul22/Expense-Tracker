@@ -62,7 +62,7 @@ class Index extends React.Component {
 
   names = ["Priyav", "Harsh", "Rahul", "Rishi", "Vrutik"];
 
-  incomeData = {
+  data = {
     labels: ["Jan", "Feb", "March", "April", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
     datasets: [
       {
@@ -72,7 +72,7 @@ class Index extends React.Component {
     ]
   };
 
-  expenseData = {
+  data1 = {
     labels: ["Jan", "Feb", "March", "April", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
     datasets: [
       {
@@ -87,26 +87,20 @@ class Index extends React.Component {
     this.state = {
       activeNav: 1,
       chartExample1Data: "data1",
-      isIncome: true,
-      income : true
+      isIncome: true
     };
     if (window.Chart) {
       parseOptions(Chart, chartOptions());
     }
   }
-  toggleNavs = (e, index) => {
-    e.preventDefault();
-
-    this.setState({
-      ...this.state,
-      activeNav: index,
-      chartExample1Data:
-        this.state.chartExample1Data === "data1" ? "data2" : "data1",
-      income : index === 1 ? true : false
-    });
-
-    console.log(this.state.income);
-  };
+  // toggleNavs = (e, index) => {
+  //   e.preventDefault();
+  //   this.setState({
+  //     activeNav: index,
+  //     chartExample1Data:
+  //       this.state.chartExample1Data === "data1" ? "data2" : "data1"
+  //   });
+  // };
   render() {
     return (
       <>
@@ -124,7 +118,7 @@ class Index extends React.Component {
                       </h6>
                       <h2 className="text-white mb-0">Transaction Analysis</h2>
                     </div>
-                    <div className="col">
+                    {/* <div className="col">
                       <Nav className="justify-content-end" pills>
                         <NavItem>
                           <NavLink
@@ -134,7 +128,7 @@ class Index extends React.Component {
                             href="#pablo"
                             onClick={e => this.toggleNavs(e, 1)}
                           >
-                            <span className="d-none d-md-block">Income</span>
+                            <span className="d-none d-md-block">Month</span>
                             <span className="d-md-none">M</span>
                           </NavLink>
                         </NavItem>
@@ -147,19 +141,27 @@ class Index extends React.Component {
                             href="#pablo"
                             onClick={e => this.toggleNavs(e, 2)}
                           >
-                            <span className="d-none d-md-block">Expense</span>
+                            <span className="d-none d-md-block">Week</span>
                             <span className="d-md-none">W</span>
                           </NavLink>
                         </NavItem>
                       </Nav>
-                    </div>
+                    </div> */}
                   </Row>
                 </CardHeader>
                 <CardBody>
                   {/* Chart */}
                   <div className="chart">
                     <Line
-                      data = {this.state.income === true ? this.incomeData : this.expenseData}
+                      data = {this.data}
+                      //data={chartExample1[this.state.chartExample1Data]}
+                      options={chartExample1.options}
+                      getDatasetAtEvent={e => console.log(e)}
+                    />
+                  </div>
+                  <div className="chart">
+                    <Line
+                      data = {this.data1}
                       //data={chartExample1[this.state.chartExample1Data]}
                       options={chartExample1.options}
                       getDatasetAtEvent={e => console.log(e)}

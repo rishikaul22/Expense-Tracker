@@ -339,13 +339,12 @@ let chartExample1 = {
     }
   },
   data1: canvas => {
-    
     return {
       labels: ["Jan", "Feb", "March", "April", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
       datasets: [
         {
           label: "Performance",
-          data: [0, 20, 40, 30, 15, 40, 20, 60, 60, 90, 140]
+          data: [0, 20, 40, 30, 15, 40, 20, 60, 60, 90, 140, 10, 40]
         }
       ]
     };

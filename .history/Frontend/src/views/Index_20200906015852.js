@@ -62,7 +62,7 @@ class Index extends React.Component {
 
   names = ["Priyav", "Harsh", "Rahul", "Rishi", "Vrutik"];
 
-  incomeData = {
+  data = {
     labels: ["Jan", "Feb", "March", "April", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
     datasets: [
       {
@@ -72,7 +72,7 @@ class Index extends React.Component {
     ]
   };
 
-  expenseData = {
+  data1 = {
     labels: ["Jan", "Feb", "March", "April", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
     datasets: [
       {
@@ -87,8 +87,7 @@ class Index extends React.Component {
     this.state = {
       activeNav: 1,
       chartExample1Data: "data1",
-      isIncome: true,
-      income : true
+      isIncome: true
     };
     if (window.Chart) {
       parseOptions(Chart, chartOptions());
@@ -96,16 +95,11 @@ class Index extends React.Component {
   }
   toggleNavs = (e, index) => {
     e.preventDefault();
-
     this.setState({
-      ...this.state,
       activeNav: index,
       chartExample1Data:
-        this.state.chartExample1Data === "data1" ? "data2" : "data1",
-      income : index === 1 ? true : false
+        this.state.chartExample1Data === "data1" ? "data2" : "data1"
     });
-
-    console.log(this.state.income);
   };
   render() {
     return (
@@ -159,12 +153,26 @@ class Index extends React.Component {
                   {/* Chart */}
                   <div className="chart">
                     <Line
-                      data = {this.state.income === true ? this.incomeData : this.expenseData}
+                      data = {this.data}
+                      //data={chartExample1[this.state.chartExample1Data]}
+                      options={chartExample1.options}
+                      getDatasetAtEvent={e => console.log(e)}
+                    />
+                    <Line
+                      data = {this.data1}
                       //data={chartExample1[this.state.chartExample1Data]}
                       options={chartExample1.options}
                       getDatasetAtEvent={e => console.log(e)}
                     />
                   </div>
+                  {/* <div className="chart">
+                    <Line
+                      data = {this.data1}
+                      //data={chartExample1[this.state.chartExample1Data]}
+                      options={chartExample1.options}
+                      getDatasetAtEvent={e => console.log(e)}
+                    />
+                  </div> */}
                 </CardBody>
               </Card>
             </Col>
