@@ -107,7 +107,7 @@ class DashBoard(Resource):
     @cross_origin(origin='*', support_credentials=True)
     def get(self, user_id):
         user = User.query.get(user_id)
-        expense_list = Expense.query.all()
+        expense_list = Expense.query.filter_by(user_id=user_id).all()
         expense_data = []
         print(expense_list)
         if not (expense_list):
@@ -127,27 +127,36 @@ class DashBoard(Resource):
                                  'amount': expense_list[i].amount,
                                  "year": expense_list[i].year,
                                  'type': expense_list[i].type})
-        print(expense_data)
+        # print(expense_data)
         df = pd.DataFrame.from_dict(expense_data)
         print(df)
-        income = df.loc[df['type'] == 'Income']['amount'].sum()
-        expense = df.loc[df['type'] == 'Expense']['amount'].sum()
-        incomedf = pd.DataFrame(df.loc[df['type'] == 'Income'])[
-            ['month', 'amount']].to_dict()
-        expensedf = pd.DataFrame(df.loc[df['type'] == 'Expense'])[
-            ['month', 'amount']].to_dict()
+
+        current_month = datetime.datetime.now().month
+        monthlyincome = df.loc[(df['type']=='Income') & (df['month']==current_month)]['amount'].sum()
+        monthlyexpense = df.loc[(df['type']=='Expense') & (df['month']==current_month)]['amount'].sum()
+
+        incomedf = pd.DataFrame(df.loc[df['type']=='Income'])[['month','amount']].to_dict()
+        expensedf = pd.DataFrame(df.loc[df['type']=='Expense'])[['month','amount']].to_dict()
+        if float(monthlyincome) == 0 and float(monthlyexpense) == 0:
+            monthly_save = 0
+        elif float(monthlyincome) == 0:
+            monthly_save = 0
+        else :
+            monthly_save = ((float(monthlyincome-monthlyexpense))/float(monthlyincome))*100
+
+        print(monthly_save)
         print(incomedf)
         print(expensedf)
-        # print(type(int(income)))
-        print(expense)
-        wallet = income - expense
+        wallet = monthlyincome - monthlyexpense
         return {
             "name": user.name,
-            "income": float(income),
-            "expense": float(expense),
-            "wallet": float(wallet),
+            "income": float(monthlyincome),
+            "expense": float(monthlyexpense), 
+            "wallet" : float(wallet),
             "incomedf": incomedf,
-            "expensedf": expensedf
+            "expensedf": expensedf,
+            "monthly_savings":monthly_save,
+            "transactions": expense_data
         }
 
 
