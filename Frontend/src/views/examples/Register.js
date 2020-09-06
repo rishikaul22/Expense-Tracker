@@ -56,7 +56,7 @@ class Register extends React.Component {
     }
 
     console.log(user)
-    const res = await axios.post('https://rpk-expense-tracker.herokuapp.com/register', user).then((response) => {
+    const res = await axios.post('https://cors-anywhere.herokuapp.com/https://rpk-expense-tracker.herokuapp.com/register', user).then((response) => {
       console.log(response)
     }).catch((err) => {
       console.log(err)
