@@ -28,6 +28,7 @@ import routes from "routes.js";
 import Login from "views/examples/Login";
 
 class Auth extends React.Component {
+
   componentDidMount() {
     document.body.classList.add("bg-default");
   }
@@ -88,11 +89,11 @@ class Auth extends React.Component {
           {/* Page content */}
           <Container className="mt--8 pb-5">
             <Row className="justify-content-center">
-              {/* <Switch>
+              <Switch>
                 {this.getRoutes(routes)}
                 <Redirect from="*" to="/auth/login" />
-              </Switch> */}
-              <Login />
+              </Switch>
+              {/* <Login /> */}
             </Row>
           </Container>
         </div>

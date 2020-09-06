@@ -32,14 +32,23 @@ import {
   Row,
   Col
 } from "reactstrap";
+import { Link } from "react-router-dom";
 
 class Login extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      registerName: '',
+      registerUsername: '',
+      registerPassword: ''
+    };
+  }
   render() {
     return (
       <>
         <Col lg="5" md="7">
           <Card className="bg-secondary shadow border-0">
-            <CardHeader className="bg-transparent pb-5">
+            {/* <CardHeader className="bg-transparent pb-5">
               <div className="text-muted text-center mt-2 mb-3">
                 <small>Sign in with</small>
               </div>
@@ -73,20 +82,20 @@ class Login extends React.Component {
                   <span className="btn-inner--text">Google</span>
                 </Button>
               </div>
-            </CardHeader>
+            </CardHeader> */}
             <CardBody className="px-lg-5 py-lg-5">
               <div className="text-center text-muted mb-4">
-                <small>Or sign in with credentials</small>
+                <h4 className='lead font-weight-bold'>Sign In</h4>
               </div>
               <Form role="form">
                 <FormGroup className="mb-3">
                   <InputGroup className="input-group-alternative">
                     <InputGroupAddon addonType="prepend">
                       <InputGroupText>
-                        <i className="ni ni-email-83" />
+                        <i className="ni ni-circle-08" />
                       </InputGroupText>
                     </InputGroupAddon>
-                    <Input placeholder="Email" type="email" autoComplete="new-email"/>
+                    <Input placeholder="Username" type="email" autoComplete="new-email" />
                   </InputGroup>
                 </FormGroup>
                 <FormGroup>
@@ -96,10 +105,10 @@ class Login extends React.Component {
                         <i className="ni ni-lock-circle-open" />
                       </InputGroupText>
                     </InputGroupAddon>
-                    <Input placeholder="Password" type="password" autoComplete="new-password"/>
+                    <Input placeholder="Password" type="password" autoComplete="new-password" />
                   </InputGroup>
                 </FormGroup>
-                <div className="custom-control custom-control-alternative custom-checkbox">
+                {/* <div className="custom-control custom-control-alternative custom-checkbox">
                   <input
                     className="custom-control-input"
                     id=" customCheckLogin"
@@ -111,35 +120,28 @@ class Login extends React.Component {
                   >
                     <span className="text-muted">Remember me</span>
                   </label>
-                </div>
+                </div> */}
                 <div className="text-center">
                   <Button className="my-4" color="primary" type="button">
                     Sign in
                   </Button>
                 </div>
               </Form>
+              <Row>
+
+                <Col className="text-center" xs="12">
+
+                  <button
+                    className="btn btn-link"
+                    onClick={e => e.preventDefault()}
+                  >
+                    <Link to='/auth/register'><small>Create account</small></Link>
+                  </button>
+                </Col>
+              </Row>
             </CardBody>
           </Card>
-          <Row className="mt-3">
-            <Col xs="6">
-              <a
-                className="text-light"
-                href="#pablo"
-                onClick={e => e.preventDefault()}
-              >
-                <small>Forgot password?</small>
-              </a>
-            </Col>
-            <Col className="text-right" xs="6">
-              <a
-                className="text-light"
-                href="#pablo"
-                onClick={e => e.preventDefault()}
-              >
-                <small>Create new account</small>
-              </a>
-            </Col>
-          </Row>
+
         </Col>
       </>
     );
