@@ -15,7 +15,8 @@ from werkzeug.security import safe_str_cmp
 import datetime
 
 app = Flask(__name__)
-cors = CORS(app, support_credentials=True)
+cors = CORS(app, support_credentials=True, allow_headers=[
+    "Content-Type", "Authorization", "Access-Control-Allow-Credentials"])
 app.config['SECRET_KEY'] = 'assembler'
 
 basedir = os.path.abspath(os.path.dirname(__file__))
