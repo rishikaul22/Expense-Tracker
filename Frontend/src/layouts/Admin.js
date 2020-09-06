@@ -25,29 +25,30 @@ import AdminFooter from "components/Footers/AdminFooter.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
 
 import routes from "routes.js";
+import Index from "views/Index";
 
 class Admin extends React.Component {
-  state
+  token = this.props.location.state.access_token
   componentDidUpdate(e) {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
     this.refs.mainContent.scrollTop = 0;
   }
-  getRoutes = routes => {
-    return routes.map((prop, key) => {
-      if (prop.layout === "/admin") {
-        return (
-          <Route
-            path={prop.layout + prop.path}
-            component={prop.component}
-            key={key}
-          />
-        );
-      } else {
-        return null;
-      }
-    });
-  };
+  // getRoutes = routes => {
+  //   return routes.map((prop, key) => {
+  //     if (prop.layout === "/admin") {
+  //       return (
+  //         <Route
+  //           path={prop.layout + prop.path}
+  //           component={prop.component}
+  //           key={key}
+  //         />
+  //       );
+  //     } else {
+  //       return null;
+  //     }
+  //   });
+  // };
   getBrandText = path => {
     for (let i = 0; i < routes.length; i++) {
       if (
@@ -75,12 +76,14 @@ class Admin extends React.Component {
         <div className="main-content" ref="mainContent">
           <AdminNavbar
             {...this.props}
-            brandText={this.getBrandText(this.props.location.pathname)}
+            brandText='Dashboard'
+            token={this.token}
           />
-          <Switch>
+          {/* <Switch>
             {this.getRoutes(routes)}
             <Redirect from="*" to="/admin/index" />
-          </Switch>
+          </Switch> */}
+          <Index />
           <Container fluid>
             <AdminFooter />
           </Container>

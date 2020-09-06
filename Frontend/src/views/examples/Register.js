@@ -32,7 +32,7 @@ import {
   Row,
   Col
 } from "reactstrap";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import axios from "axios";
 
 class Register extends React.Component {
@@ -41,7 +41,8 @@ class Register extends React.Component {
     this.state = {
       registerName: '',
       registerUsername: '',
-      registerPassword: ''
+      registerPassword: '',
+      registerSuccess: false
     };
   }
 
@@ -51,13 +52,12 @@ class Register extends React.Component {
       name: this.state.registerName,
       password: this.state.registerPassword
     }
-    let config = {
 
-    }
 
     console.log(user)
     const res = await axios.post('https://cors-anywhere.herokuapp.com/https://rpk-expense-tracker.herokuapp.com/register', user).then((response) => {
       console.log(response)
+      this.setState({ ...this.state, registerSuccess: true })
     }).catch((err) => {
       console.log(err)
     })
@@ -66,6 +66,10 @@ class Register extends React.Component {
   }
 
   render() {
+    if (this.state.registerSuccess) {
+      return <Redirect to='auth/login' />
+    }
+
     return (
       <>
         <Col lg="6" md="8">

@@ -16,7 +16,7 @@
 
 */
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 // reactstrap components
 import {
   DropdownMenu,
@@ -34,9 +34,26 @@ import {
   Container,
   Media
 } from "reactstrap";
+import axios from "axios";
 
 class AdminNavbar extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+
+      logoutSuccess: false
+    };
+  }
+  logOut = async () => {
+    const res = await axios.post('https://cors-anywhere.herokuapp.com/https://rpk-expense-tracker.herokuapp.com/logout', {}, { headers: { Authorization: this.props.token } }).then((response) => {
+      console.log(response)
+      this.setState({ ...this.state, logoutSuccess: true })
+    })
+  }
   render() {
+    if (this.state.logoutSuccess) {
+      return <Redirect to='auth/login' />
+    }
     return (
       <>
         <Navbar className="navbar-top navbar-dark" expand="md" id="navbar-main">
@@ -97,7 +114,10 @@ class AdminNavbar extends React.Component {
                     <span>Support</span>
                   </DropdownItem> */}
                   {/* <DropdownItem divider /> */}
-                  <DropdownItem href="#pablo" onClick={e => e.preventDefault()}>
+                  <DropdownItem href="#pablo" onClick={e => {
+                    console.log('Logout')
+                    this.logOut()
+                  }}>
                     <i className="ni ni-user-run" />
                     <span>Logout</span>
                   </DropdownItem>

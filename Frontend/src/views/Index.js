@@ -56,7 +56,8 @@ import {
 
 import Header from "components/Headers/Header.js";
 import Login from "./examples/Login";
-
+import AdminNavbar from '../components/Navbars/AdminNavbar'
+import AdminFooter from '../components/Footers/AdminFooter'
 
 class Index extends React.Component {
 
@@ -88,7 +89,7 @@ class Index extends React.Component {
       activeNav: 1,
       chartExample1Data: "data1",
       isIncome: true,
-      income : true
+      income: true
     };
     if (window.Chart) {
       parseOptions(Chart, chartOptions());
@@ -102,7 +103,7 @@ class Index extends React.Component {
       activeNav: index,
       chartExample1Data:
         this.state.chartExample1Data === "data1" ? "data2" : "data1",
-      income : index === 1 ? true : false
+      income: index === 1 ? true : false
     });
 
     console.log(this.state.income);
@@ -110,109 +111,115 @@ class Index extends React.Component {
   render() {
     return (
       <>
-        <Header />
-        {/* Page content */}
-        <Container className="mt--7" fluid>
-          <Row>
-            <Col className="mb-5 mb-xl-0" xl="8">
-              <Card className="bg-gradient-default shadow">
-                <CardHeader className="bg-transparent">
-                  <Row className="align-items-center">
-                    <div className="col">
-                      <h6 className="text-uppercase text-light ls-1 mb-1">
-                        Overview
+        <div className="main-content" ref="mainContent">
+          <AdminNavbar
+            {...this.props}
+            brandText="Dashboard"
+            token={this.token}
+          />
+          <Header />
+          {/* Page content */}
+          <Container className="mt--7" fluid>
+            <Row>
+              <Col className="mb-5 mb-xl-0" xl="8">
+                <Card className="bg-gradient-default shadow">
+                  <CardHeader className="bg-transparent">
+                    <Row className="align-items-center">
+                      <div className="col">
+                        <h6 className="text-uppercase text-light ls-1 mb-1">
+                          Overview
                       </h6>
-                      <h2 className="text-white mb-0">Transaction Analysis</h2>
+                        <h2 className="text-white mb-0">Transaction Analysis</h2>
+                      </div>
+                      <div className="col">
+                        <Nav className="justify-content-end" pills>
+                          <NavItem>
+                            <NavLink
+                              className={classnames("py-2 px-3", {
+                                active: this.state.activeNav === 1
+                              })}
+                              href="#pablo"
+                              onClick={e => this.toggleNavs(e, 1)}
+                            >
+                              <span className="d-none d-md-block">Income</span>
+                              <span className="d-md-none">M</span>
+                            </NavLink>
+                          </NavItem>
+                          <NavItem>
+                            <NavLink
+                              className={classnames("py-2 px-3", {
+                                active: this.state.activeNav === 2
+                              })}
+                              data-toggle="tab"
+                              href="#pablo"
+                              onClick={e => this.toggleNavs(e, 2)}
+                            >
+                              <span className="d-none d-md-block">Expense</span>
+                              <span className="d-md-none">W</span>
+                            </NavLink>
+                          </NavItem>
+                        </Nav>
+                      </div>
+                    </Row>
+                  </CardHeader>
+                  <CardBody>
+                    {/* Chart */}
+                    <div className="chart">
+                      <Line
+                        data={this.state.income === true ? this.incomeData : this.expenseData}
+                        //data={chartExample1[this.state.chartExample1Data]}
+                        options={chartExample1.options}
+                        getDatasetAtEvent={e => console.log(e)}
+                      />
                     </div>
-                    <div className="col">
-                      <Nav className="justify-content-end" pills>
-                        <NavItem>
-                          <NavLink
-                            className={classnames("py-2 px-3", {
-                              active: this.state.activeNav === 1
-                            })}
-                            href="#pablo"
-                            onClick={e => this.toggleNavs(e, 1)}
-                          >
-                            <span className="d-none d-md-block">Income</span>
-                            <span className="d-md-none">M</span>
-                          </NavLink>
-                        </NavItem>
-                        <NavItem>
-                          <NavLink
-                            className={classnames("py-2 px-3", {
-                              active: this.state.activeNav === 2
-                            })}
-                            data-toggle="tab"
-                            href="#pablo"
-                            onClick={e => this.toggleNavs(e, 2)}
-                          >
-                            <span className="d-none d-md-block">Expense</span>
-                            <span className="d-md-none">W</span>
-                          </NavLink>
-                        </NavItem>
-                      </Nav>
-                    </div>
-                  </Row>
-                </CardHeader>
-                <CardBody>
-                  {/* Chart */}
-                  <div className="chart">
-                    <Line
-                      data = {this.state.income === true ? this.incomeData : this.expenseData}
-                      //data={chartExample1[this.state.chartExample1Data]}
-                      options={chartExample1.options}
-                      getDatasetAtEvent={e => console.log(e)}
-                    />
-                  </div>
-                </CardBody>
-              </Card>
-            </Col>
-            <Col Col xl="4" >
-              <Card className="shadow">
-                <CardHeader className="bg-transparent">
-                  <Row className="align-items-center">
-                    <div className="col">
-                      {/* <h6 className="text-uppercase text-muted ls-1 mb-1">
+                  </CardBody>
+                </Card>
+              </Col>
+              <Col Col xl="4" >
+                <Card className="shadow">
+                  <CardHeader className="bg-transparent">
+                    <Row className="align-items-center">
+                      <div className="col">
+                        {/* <h6 className="text-uppercase text-muted ls-1 mb-1">
                         Performance
                       </h6> */}
-                      {this.state.isIncome == true ? (<h2 className="mb-0">Add Income</h2>) : (<h2 className="mb-0">Add Expense</h2>)}
+                        {this.state.isIncome == true ? (<h2 className="mb-0">Add Income</h2>) : (<h2 className="mb-0">Add Expense</h2>)}
 
-                    </div>
-                  </Row>
-                </CardHeader>
-                <CardBody>
+                      </div>
+                    </Row>
+                  </CardHeader>
+                  <CardBody>
 
-                  {/* <div className="chart">
+                    {/* <div className="chart">
                     <Bar
                       data={chartExample2.data}
                       options={chartExample2.options}
                     />
                   </div> */}
-                  <FormGroup className="mb-3">
-                    <InputGroup className="input-group-alternative">
-                      <InputGroupAddon addonType="prepend">
-                        <InputGroupText>
-                          {/* <i className="ni ni-email-83" /> */}
-                          <FaRupeeSign />
-                        </InputGroupText>
-                      </InputGroupAddon>
-                      <Input placeholder="Amount" type="text" autoComplete="new-email" onChange={(e) => (console.log(e.target.value))} />
-                    </InputGroup>
-                  </FormGroup>
-                  <FormGroup>
-                    <InputGroup className="input-group-alternative">
-                      <InputGroupAddon addonType="prepend">
-                        <InputGroupText>
-                          {/* <i className="ni ni-lock-circle-open" /> */}
-                          <CgNotes />
-                        </InputGroupText>
-                      </InputGroupAddon>
-                      <Input placeholder="Description" type="text" autoComplete="new-password" />
-                    </InputGroup>
-                  </FormGroup>
-                  <Row>
-                    {/* <div className='ml-3'>
+                    <FormGroup className="mb-3">
+                      <InputGroup className="input-group-alternative">
+                        <InputGroupAddon addonType="prepend">
+                          <InputGroupText>
+                            {/* <i className="ni ni-email-83" /> */}
+                            <FaRupeeSign />
+                          </InputGroupText>
+                        </InputGroupAddon>
+                        <Input placeholder="Amount" type="text" autoComplete="new-email" onChange={(e) => (console.log(e.target.value))} />
+                      </InputGroup>
+                    </FormGroup>
+                    <FormGroup>
+                      <InputGroup className="input-group-alternative">
+                        <InputGroupAddon addonType="prepend">
+                          <InputGroupText>
+                            {/* <i className="ni ni-lock-circle-open" /> */}
+                            <CgNotes />
+                          </InputGroupText>
+                        </InputGroupAddon>
+                        <Input placeholder="Description" type="text" autoComplete="new-password" />
+                      </InputGroup>
+                    </FormGroup>
+                    <Row>
+                      {/* <div className='ml-3'>
                       <FormGroup check>
                         <Label check>
                           <Input type="radio" name="radio1" value="Income" onChange={(e) => console.log(e.target.value)} />{' '}
@@ -228,78 +235,78 @@ class Index extends React.Component {
                     </Label>
                       </FormGroup>
                     </div> */}
-                    <div class="custom-control custom-control-alternative custom-radio mb-3 ml-3">
-                      <input name="custom-radio-2" class="custom-control-input" id="customRadio5" value="Income" type="radio" defaultChecked onChange={(e) => {
-                        this.setState({ ...this.state, isIncome: true })
-                        console.log(e.target.value)
-                      }} />
-                      <label class="custom-control-label" for="customRadio5">Income</label>
-                    </div>
-                    <div class="custom-control custom-control-alternative custom-radio ml-3">
-                      <input name="custom-radio-2" class="custom-control-input" id="customRadio6" value="Expense" type="radio" onChange={(e) => {
-                        this.setState({ ...this.state, isIncome: false })
-                        console.log(e.target.value)
-                      }} />
-                      <label class="custom-control-label" for="customRadio6">Expense</label>
-                    </div>
-                  </Row>
-                  <div class="form-group">
-                    <div class="input-group input-group-alternative">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
+                      <div class="custom-control custom-control-alternative custom-radio mb-3 ml-3">
+                        <input name="custom-radio-2" class="custom-control-input" id="customRadio5" value="Income" type="radio" defaultChecked onChange={(e) => {
+                          this.setState({ ...this.state, isIncome: true })
+                          console.log(e.target.value)
+                        }} />
+                        <label class="custom-control-label" for="customRadio5">Income</label>
                       </div>
-                      <input class="form-control text" placeholder="Select date" type="text" value="06/20/2020" />
+                      <div class="custom-control custom-control-alternative custom-radio ml-3">
+                        <input name="custom-radio-2" class="custom-control-input" id="customRadio6" value="Expense" type="radio" onChange={(e) => {
+                          this.setState({ ...this.state, isIncome: false })
+                          console.log(e.target.value)
+                        }} />
+                        <label class="custom-control-label" for="customRadio6">Expense</label>
+                      </div>
+                    </Row>
+                    <div class="form-group">
+                      <div class="input-group input-group-alternative">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
+                        </div>
+                        <input class="form-control text" placeholder="Select date" type="text" value="06/20/2020" />
+                      </div>
                     </div>
-                  </div>
-                  {this.state.isIncome == true ? (<button class="btn btn-block btn-success">Add Income</button>) : (<button class="btn btn-block btn-danger">Add Expense</button>)}
-                </CardBody>
-              </Card>
-            </Col >
-          </Row >
-          <Row className="mt-5">
-            <Col className="mb-5 mb-xl-0" xl="12">
-              <Card className="shadow">
-                <CardHeader className="border-0">
-                  <Row className="align-items-center">
-                    <div className="col">
-                      <h3 className="mb-0">Your Transactions</h3>
-                    </div>
-                    <div className="col text-right">
-                      <Button
-                        color="primary"
-                        href="#pablo"
-                        onClick={e => e.preventDefault()}
-                        size="sm"
-                      >
-                        See all
+                    {this.state.isIncome == true ? (<button class="btn btn-block btn-success">Add Income</button>) : (<button class="btn btn-block btn-danger">Add Expense</button>)}
+                  </CardBody>
+                </Card>
+              </Col >
+            </Row >
+            <Row className="mt-5">
+              <Col className="mb-5 mb-xl-0" xl="12">
+                <Card className="shadow">
+                  <CardHeader className="border-0">
+                    <Row className="align-items-center">
+                      <div className="col">
+                        <h3 className="mb-0">Your Transactions</h3>
+                      </div>
+                      <div className="col text-right">
+                        <Button
+                          color="primary"
+                          href="#pablo"
+                          onClick={e => e.preventDefault()}
+                          size="sm"
+                        >
+                          See all
                       </Button>
-                    </div>
-                  </Row>
-                </CardHeader>
-                <Table className="align-items-center table-flush" responsive>
-                  <thead className="thead-light">
-                    <tr>
-                      <th scope="col">Type</th>
-                      <th scope="col">Description</th>
-                      <th scope="col">Date</th>
-                      <th scope="col">Amount</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {
-                      this.names.map(name => (
-                        <tr>
-                          <th scope="row">{name}</th>
-                          <td>4,569</td>
-                          <td>340</td>
-                          <td>
-                            <i className="fas fa-arrow-up text-success mr-3" />{" "}
+                      </div>
+                    </Row>
+                  </CardHeader>
+                  <Table className="align-items-center table-flush" responsive>
+                    <thead className="thead-light">
+                      <tr>
+                        <th scope="col">Type</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Amount</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {
+                        this.names.map(name => (
+                          <tr>
+                            <th scope="row">{name}</th>
+                            <td>4,569</td>
+                            <td>340</td>
+                            <td>
+                              <i className="fas fa-arrow-up text-success mr-3" />{" "}
                             46,53%
                           </td>
-                        </tr>
-                      ))
-                    }
-                    {/* <tr>
+                          </tr>
+                        ))
+                      }
+                      {/* <tr>
                       <th scope="row">{this.names[0]}</th>
                       <td>4,569</td>
                       <td>340</td>
@@ -344,11 +351,11 @@ class Index extends React.Component {
                         46,53%
                       </td>
                     </tr> */}
-                  </tbody>
-                </Table>
-              </Card>
-            </Col>
-            {/* <Col xl="4">
+                    </tbody>
+                  </Table>
+                </Card>
+              </Col>
+              {/* <Col xl="4">
               <Card className="shadow">
                 <CardHeader className="border-0">
                   <Row className="align-items-center">
@@ -456,8 +463,12 @@ class Index extends React.Component {
                 </Table>
               </Card>
             </Col> */}
-          </Row>
-        </Container >
+            </Row>
+          </Container >
+          <Container fluid>
+            <AdminFooter />
+          </Container>
+        </div>
       </>
     );
   }
