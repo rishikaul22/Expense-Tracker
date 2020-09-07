@@ -77,7 +77,8 @@ class DashboardPage extends React.Component {
             chartExample1Data: "data1",
             isIncome: true,
             income: true,
-            loading: false
+            loading: false,
+            data: {}
         };
         if (window.Chart) {
             parseOptions(Chart, chartOptions());
@@ -88,7 +89,7 @@ class DashboardPage extends React.Component {
         this.setState({ ...this.state, loading: true })
         const res = await axios.get(`https://cors-anywhere.herokuapp.com/https://rpk-expense-tracker.herokuapp.com/dashboard/${this.userid}`, { headers: { Authorization: this.token } }).then((res) => {
             console.log(res)
-            this.setState({ ...this.state, loading: false })
+            this.setState({ ...this.state, loading: false, data: res.data })
         })
     }
     toggleNavs = (e, index) => {
@@ -114,7 +115,7 @@ class DashboardPage extends React.Component {
                         token={this.token}
                         name={this.profileName}
                     />
-                    <Header />
+                    <Header monthly_savings={this.state.data.monthly_savings} income={this.state.data.income} wallet={this.state.data.wallet} expense={this.state.data.expense} />
                     {/* Page content */}
                     <Container className="mt--7" fluid>
                         <Row>

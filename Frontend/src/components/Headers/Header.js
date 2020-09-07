@@ -41,7 +41,7 @@ class Header extends React.Component {
                             Wallet
                           </CardTitle>
                           <span className="h2 font-weight-bold mb-0">
-                            350,897
+                            {this.props.wallet}
                           </span>
                         </div>
                         <Col className="col-auto">
@@ -71,7 +71,7 @@ class Header extends React.Component {
                             Expense
                           </CardTitle>
                           <span className="h2 font-weight-bold mb-0">
-                            2,356
+                            {this.props.expense}
                           </span>
                         </div>
                         <Col className="col-auto">
@@ -100,7 +100,7 @@ class Header extends React.Component {
                           >
                             Income
                           </CardTitle>
-                          <span className="h2 font-weight-bold mb-0">924</span>
+                          <span className="h2 font-weight-bold mb-0">{this.props.income}</span>
                         </div>
                         <Col className="col-auto">
                           <div className="icon icon-shape bg-yellow text-white rounded-circle shadow">
@@ -126,10 +126,10 @@ class Header extends React.Component {
                             tag="h5"
                             className="text-uppercase text-muted mb-0"
                           >
-                            Analytics
+                            Monthly Savings
                           </CardTitle>
                           <span className="h2 font-weight-bold mb-0">
-                            49,65%
+                            {this.props.monthly_savings}
                           </span>
                         </div>
                         <Col className="col-auto">
