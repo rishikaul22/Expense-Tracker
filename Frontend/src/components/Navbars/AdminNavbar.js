@@ -48,11 +48,13 @@ class AdminNavbar extends React.Component {
     const res = await axios.post('https://cors-anywhere.herokuapp.com/https://rpk-expense-tracker.herokuapp.com/logout', {}, { headers: { Authorization: this.props.token } }).then((response) => {
       console.log(response)
       this.setState({ ...this.state, logoutSuccess: true })
+    }).catch((err) => {
+      console.log(err)
     })
   }
   render() {
     if (this.state.logoutSuccess) {
-      return <Redirect to='auth/login' />
+      return <Redirect to='/login' />
     }
     return (
       <>

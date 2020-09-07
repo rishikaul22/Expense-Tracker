@@ -67,7 +67,7 @@ class Register extends React.Component {
 
   render() {
     if (this.state.registerSuccess) {
-      return <Redirect to='auth/login' />
+      return <Redirect to='/login' />
     }
 
     return (
@@ -205,7 +205,7 @@ class Register extends React.Component {
                     className="btn btn-link"
                     onClick={e => e.preventDefault()}
                   >
-                    <Link to='/auth/login'><small>Sign in</small></Link>
+                    <Link to='/login'><small>Sign in</small></Link>
                   </button>
                 </Col>
               </Row>

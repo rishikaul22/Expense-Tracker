@@ -69,7 +69,7 @@ class Login extends React.Component {
     if (this.state.loginSuccess) {
       console.log(this.state.loginSuccess)
       return (<Redirect to={{
-        pathname: '/admin/index',
+        pathname: '/dashboard',
         state: { access_token: this.state.token }
       }} />)
     }
@@ -170,7 +170,7 @@ class Login extends React.Component {
                   className="btn btn-link"
                   onClick={e => e.preventDefault()}
                 >
-                  <Link to='/auth/register'><small>Create account</small></Link>
+                  <Link to='/register'><small>Create account</small></Link>
                 </button>
               </Col>
             </Row>
