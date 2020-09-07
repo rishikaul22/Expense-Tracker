@@ -16,9 +16,11 @@
 
 */
 import React from "react";
-
+import { FaWallet, FaCreditCard } from "react-icons/fa";
+import { FcMoneyTransfer } from "react-icons/fc";
 // reactstrap components
 import { Card, CardBody, CardTitle, Container, Row, Col } from "reactstrap";
+import NumberFormat from "react-number-format";
 
 class Header extends React.Component {
   render() {
@@ -41,12 +43,15 @@ class Header extends React.Component {
                             Wallet
                           </CardTitle>
                           <span className="h2 font-weight-bold mb-0">
-                            350,897
+
+                            <NumberFormat value={this.props.wallet} displayType={'text'} thousandSeparator={true} thousandsGroupStyle='lakh' prefix={'₹'} />
+
                           </span>
                         </div>
                         <Col className="col-auto">
-                          <div className="icon icon-shape bg-danger text-white rounded-circle shadow">
-                            <i className="fas fa-credit-card" />
+                          <div className="icon icon-shape bg-primary text-white rounded-circle shadow">
+                            {/* <i className="fas fa-credit-card" /> */}
+                            <FaWallet />
                           </div>
                         </Col>
                       </Row>
@@ -71,12 +76,14 @@ class Header extends React.Component {
                             Expense
                           </CardTitle>
                           <span className="h2 font-weight-bold mb-0">
-                            2,356
+                            <NumberFormat value={this.props.expense} displayType={'text'} thousandSeparator={true} thousandsGroupStyle='lakh' prefix={'₹'} />
+                            {/* {'₹' + this.props.expense} */}
                           </span>
                         </div>
                         <Col className="col-auto">
-                          <div className="icon icon-shape bg-warning text-white rounded-circle shadow">
-                            <i className="fas fa-chart-pie" />
+                          <div className="icon icon-shape bg-danger text-white rounded-circle shadow">
+                            {/* <i className="fas fa-chart-pie" /> */}
+                            <FaCreditCard />
                           </div>
                         </Col>
                       </Row>
@@ -100,11 +107,15 @@ class Header extends React.Component {
                           >
                             Income
                           </CardTitle>
-                          <span className="h2 font-weight-bold mb-0">924</span>
+                          <span className="h2 font-weight-bold mb-0">
+                            <NumberFormat value={this.props.income} displayType={'text'} thousandSeparator={true} thousandsGroupStyle='lakh' prefix={'₹'} />
+                            {/* {'₹' + this.props.income} */}
+                          </span>
                         </div>
                         <Col className="col-auto">
-                          <div className="icon icon-shape bg-yellow text-white rounded-circle shadow">
-                            <i className="fas fa-users" />
+                          <div className="icon icon-shape bg-green text-white rounded-circle shadow">
+                            {/* <i className="fas fa-users" /> */}
+                            <FcMoneyTransfer />
                           </div>
                         </Col>
                       </Row>
@@ -126,10 +137,10 @@ class Header extends React.Component {
                             tag="h5"
                             className="text-uppercase text-muted mb-0"
                           >
-                            Analytics
+                            Monthly Savings
                           </CardTitle>
                           <span className="h2 font-weight-bold mb-0">
-                            49,65%
+                            {Math.round(this.props.monthly_savings) + '%'}
                           </span>
                         </div>
                         <Col className="col-auto">

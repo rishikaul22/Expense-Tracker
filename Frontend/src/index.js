@@ -27,13 +27,18 @@ import AdminLayout from "layouts/Admin.js";
 import AuthLayout from "layouts/Auth.js";
 import Register from "views/examples/Register";
 import Auth from "layouts/Auth";
+import LoginPage from "pages/LoginPage";
+import RegisterPage from "pages/RegisterPage";
+import DashboardPage from "pages/DashboardPage";
 
 ReactDOM.render(
   <BrowserRouter>
     <Switch>
       <Route path="/admin" render={props => <AdminLayout {...props} />} />
-      <Route path="/auth" render={props => <AuthLayout {...props} />} />
-      <Redirect from="/" to="/auth" />
+      <Route path='/login' component={LoginPage} />
+      <Route path='/register' component={RegisterPage} />
+      <Route path='/dashboard' component={DashboardPage} />
+      <Redirect from="/" to="/login" />
 
     </Switch>
   </BrowserRouter>,

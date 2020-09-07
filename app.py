@@ -96,7 +96,8 @@ class UserLogin(Resource):
             #refresh_token = create_refresh_token(user.id)
             return {
                 'access_token': access_token,
-                'id': user.id
+                'id': user.id,
+                'name': user.name
             }, 200
         return {"message": 'Invalid credentials'}, 401
 
@@ -132,17 +133,22 @@ class DashBoard(Resource):
         print(df)
 
         current_month = datetime.datetime.now().month
-        monthlyincome = df.loc[(df['type']=='Income') & (df['month']==current_month)]['amount'].sum()
-        monthlyexpense = df.loc[(df['type']=='Expense') & (df['month']==current_month)]['amount'].sum()
+        monthlyincome = df.loc[(df['type'] == 'Income') & (
+            df['month'] == current_month)]['amount'].sum()
+        monthlyexpense = df.loc[(df['type'] == 'Expense') & (
+            df['month'] == current_month)]['amount'].sum()
 
-        incomedf = pd.DataFrame(df.loc[df['type']=='Income'])[['month','amount']].to_dict()
-        expensedf = pd.DataFrame(df.loc[df['type']=='Expense'])[['month','amount']].to_dict()
+        incomedf = pd.DataFrame(df.loc[df['type'] == 'Income'])[
+            ['month', 'amount']].to_dict()
+        expensedf = pd.DataFrame(df.loc[df['type'] == 'Expense'])[
+            ['month', 'amount']].to_dict()
         if float(monthlyincome) == 0 and float(monthlyexpense) == 0:
             monthly_save = 0
         elif float(monthlyincome) == 0:
             monthly_save = 0
-        else :
-            monthly_save = ((float(monthlyincome-monthlyexpense))/float(monthlyincome))*100
+        else:
+            monthly_save = (
+                (float(monthlyincome-monthlyexpense))/float(monthlyincome))*100
 
         print(monthly_save)
         print(incomedf)
@@ -151,11 +157,11 @@ class DashBoard(Resource):
         return {
             "name": user.name,
             "income": float(monthlyincome),
-            "expense": float(monthlyexpense), 
-            "wallet" : float(wallet),
+            "expense": float(monthlyexpense),
+            "wallet": float(wallet),
             "incomedf": incomedf,
             "expensedf": expensedf,
-            "monthly_savings":monthly_save,
+            "monthly_savings": monthly_save,
             "transactions": expense_data
         }
 
@@ -166,6 +172,8 @@ class UserExpense(Resource):
     @cross_origin(origin='*', support_credentials=True)
     def post(self, user_id):
         data = request.get_json()
+        if not data:
+            return {'message': 'Data empty'}
         expense = Expense(user_id=user_id,
                           description=data['description'], amount=data['amount'], type=data['type'], day=data['day'], month=data['month'], year=data['year'])
         db.session.add(expense)
