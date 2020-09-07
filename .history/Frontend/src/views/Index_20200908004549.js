@@ -212,7 +212,7 @@ class Index extends React.Component {
                     <div className="chart">
                       <Line
                         //data={this.state.income === true ? this.incomeData : this.expenseData}
-                        data={this.transactions[this.state.chartExample1Data]}
+                        data={this.state.data}
                         options={chartExample1.options}
                         getDatasetAtEvent={e => console.log(e)}
                       />

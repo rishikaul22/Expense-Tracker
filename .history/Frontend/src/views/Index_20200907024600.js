@@ -83,8 +83,7 @@ class Index extends React.Component {
       ]
     }
   }
-
-  income = {
+  incomeData = {
     labels: ["Jan", "Feb", "March", "April", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
     datasets: [
       {
@@ -92,17 +91,17 @@ class Index extends React.Component {
         data: [0, 20, 40, 30, 15, 200, 20, 60, 60, 90, 160, 100]
       }
     ]
-  }
+  };
 
-  expense = {
+  expenseData = {
     labels: ["Jan", "Feb", "March", "April", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
     datasets: [
       {
         label: "Performance",
-        data: [0, 40, 100, 80, 90, 50, 200, 40, 20, 10]
+        data: [0, 40, 100, 80, 90, 50, 200]
       }
     ]
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -110,7 +109,7 @@ class Index extends React.Component {
       activeNav: 1,
       chartExample1Data: "data1",
       isIncome: true,
-      data : this.income
+      income: true
     };
     if (window.Chart) {
       parseOptions(Chart, chartOptions());
@@ -118,20 +117,18 @@ class Index extends React.Component {
   }
   toggleNavs = (e, index) => {
     e.preventDefault();
-    console.log(index);
 
     this.setState({
       ...this.state,
       activeNav: index,
       chartExample1Data:
         this.state.chartExample1Data === "data1" ? "data2" : "data1",
-      data : index == 1 ? this.income : this.expense
+      income: index === 1 ? true : false
     });
 
+    console.log(this.state.income);
   };
   render() {
-    console.log(this.state.chartExample1Data);
-    console.log(this.transactions[this.state.chartExample1Data]);
     return (
       <>
         <div className="main-content" ref="mainContent">
@@ -162,18 +159,7 @@ class Index extends React.Component {
                                 active: this.state.activeNav === 1
                               })}
                               href="#pablo"
-                              //onClick={e => this.toggleNavs(e, 1)}
-                              onClick = {e => {
-                                e.preventDefault();
-
-                                this.setState({
-                                  ...this.state,
-                                  activeNav: 1,
-                                  chartExample1Data:
-                                    this.state.chartExample1Data === "data1" ? "data2" : "data1",
-                                  data : this.income
-                                });
-                              }}
+                              onClick={e => this.toggleNavs(e, 1)}
                             >
                               <span className="d-none d-md-block">Income</span>
                               <span className="d-md-none">M</span>
@@ -186,18 +172,7 @@ class Index extends React.Component {
                               })}
                               data-toggle="tab"
                               href="#pablo"
-                              //onClick={e => this.toggleNavs(e, 2)}
-                              onClick = {e => {
-                                e.preventDefault();
-
-                                this.setState({
-                                  ...this.state,
-                                  activeNav: 2,
-                                  chartExample1Data:
-                                    this.state.chartExample1Data === "data1" ? "data2" : "data1",
-                                  data : this.expense
-                                });
-                              }}
+                              onClick={e => this.toggleNavs(e, 2)}
                             >
                               <span className="d-none d-md-block">Expense</span>
                               <span className="d-md-none">W</span>

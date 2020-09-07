@@ -63,26 +63,26 @@ class Index extends React.Component {
 
   names = ["Priyav", "Harsh", "Rahul", "Rishi", "Vrutik"];
 
-  transactions = {
-    data1 : {
-      labels: ["Jan", "Feb", "March", "April", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-      datasets: [
-        {
-          label: "Performance",
-          data: [0, 20, 40, 30, 15, 200, 20, 60, 60, 90, 160, 100]
-        }
-      ]
-    },
-    data2 : {
-      labels: ["Jan", "Feb", "March", "April", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-      datasets: [
-        {
-          label: "Performance",
-          data: [0, 40, 100, 80, 90, 50, 200, 40, 20, 10]
-        }
-      ]
-    }
-  }
+  // transactions = {
+  //   data1 : {
+  //     labels: ["Jan", "Feb", "March", "April", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+  //     datasets: [
+  //       {
+  //         label: "Performance",
+  //         data: [0, 20, 40, 30, 15, 200, 20, 60, 60, 90, 160, 100]
+  //       }
+  //     ]
+  //   },
+  //   data2 : {
+  //     labels: ["Jan", "Feb", "March", "April", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+  //     datasets: [
+  //       {
+  //         label: "Performance",
+  //         data: [0, 40, 100, 80, 90, 50, 200, 40, 20, 10]
+  //       }
+  //     ]
+  //   }
+  // }
 
   income = {
     labels: ["Jan", "Feb", "March", "April", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
@@ -131,7 +131,6 @@ class Index extends React.Component {
   };
   render() {
     console.log(this.state.chartExample1Data);
-    console.log(this.transactions[this.state.chartExample1Data]);
     return (
       <>
         <div className="main-content" ref="mainContent">
@@ -212,7 +211,7 @@ class Index extends React.Component {
                     <div className="chart">
                       <Line
                         //data={this.state.income === true ? this.incomeData : this.expenseData}
-                        data={this.transactions[this.state.chartExample1Data]}
+                        data={this.state.data}
                         options={chartExample1.options}
                         getDatasetAtEvent={e => console.log(e)}
                       />

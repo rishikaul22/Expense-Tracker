@@ -63,26 +63,26 @@ class Index extends React.Component {
 
   names = ["Priyav", "Harsh", "Rahul", "Rishi", "Vrutik"];
 
-  transactions = {
-    data1 : {
-      labels: ["Jan", "Feb", "March", "April", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-      datasets: [
-        {
-          label: "Performance",
-          data: [0, 20, 40, 30, 15, 200, 20, 60, 60, 90, 160, 100]
-        }
-      ]
-    },
-    data2 : {
-      labels: ["Jan", "Feb", "March", "April", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-      datasets: [
-        {
-          label: "Performance",
-          data: [0, 40, 100, 80, 90, 50, 200, 40, 20, 10]
-        }
-      ]
-    }
-  }
+  // transactions = {
+  //   data1 : {
+  //     labels: ["Jan", "Feb", "March", "April", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+  //     datasets: [
+  //       {
+  //         label: "Performance",
+  //         data: [0, 20, 40, 30, 15, 200, 20, 60, 60, 90, 160, 100]
+  //       }
+  //     ]
+  //   },
+  //   data2 : {
+  //     labels: ["Jan", "Feb", "March", "April", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+  //     datasets: [
+  //       {
+  //         label: "Performance",
+  //         data: [0, 40, 100, 80, 90, 50, 200, 40, 20, 10]
+  //       }
+  //     ]
+  //   }
+  // }
 
   income = {
     labels: ["Jan", "Feb", "March", "April", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
@@ -125,13 +125,12 @@ class Index extends React.Component {
       activeNav: index,
       chartExample1Data:
         this.state.chartExample1Data === "data1" ? "data2" : "data1",
-      data : index == 1 ? this.income : this.expense
+      data : index === 1 ? this.income : this.expense
     });
 
   };
   render() {
-    console.log(this.state.chartExample1Data);
-    console.log(this.transactions[this.state.chartExample1Data]);
+    console.log(this.state.data);
     return (
       <>
         <div className="main-content" ref="mainContent">
@@ -162,18 +161,7 @@ class Index extends React.Component {
                                 active: this.state.activeNav === 1
                               })}
                               href="#pablo"
-                              //onClick={e => this.toggleNavs(e, 1)}
-                              onClick = {e => {
-                                e.preventDefault();
-
-                                this.setState({
-                                  ...this.state,
-                                  activeNav: 1,
-                                  chartExample1Data:
-                                    this.state.chartExample1Data === "data1" ? "data2" : "data1",
-                                  data : this.income
-                                });
-                              }}
+                              onClick={e => this.toggleNavs(e, 1)}
                             >
                               <span className="d-none d-md-block">Income</span>
                               <span className="d-md-none">M</span>
@@ -186,18 +174,7 @@ class Index extends React.Component {
                               })}
                               data-toggle="tab"
                               href="#pablo"
-                              //onClick={e => this.toggleNavs(e, 2)}
-                              onClick = {e => {
-                                e.preventDefault();
-
-                                this.setState({
-                                  ...this.state,
-                                  activeNav: 2,
-                                  chartExample1Data:
-                                    this.state.chartExample1Data === "data1" ? "data2" : "data1",
-                                  data : this.expense
-                                });
-                              }}
+                              onClick={e => this.toggleNavs(e, 2)}
                             >
                               <span className="d-none d-md-block">Expense</span>
                               <span className="d-md-none">W</span>
@@ -212,7 +189,7 @@ class Index extends React.Component {
                     <div className="chart">
                       <Line
                         //data={this.state.income === true ? this.incomeData : this.expenseData}
-                        data={this.transactions[this.state.chartExample1Data]}
+                        data={this.state.data}
                         options={chartExample1.options}
                         getDatasetAtEvent={e => console.log(e)}
                       />
