@@ -19,6 +19,7 @@ import React from "react";
 
 // reactstrap components
 import { Card, CardBody, CardTitle, Container, Row, Col } from "reactstrap";
+import NumberFormat from "react-number-format";
 
 class Header extends React.Component {
   render() {
@@ -41,7 +42,9 @@ class Header extends React.Component {
                             Wallet
                           </CardTitle>
                           <span className="h2 font-weight-bold mb-0">
-                            {this.props.wallet}
+
+                            <NumberFormat value={this.props.wallet} displayType={'text'} thousandSeparator={true} thousandsGroupStyle='lakh' prefix={'₹'} />
+
                           </span>
                         </div>
                         <Col className="col-auto">
@@ -71,7 +74,8 @@ class Header extends React.Component {
                             Expense
                           </CardTitle>
                           <span className="h2 font-weight-bold mb-0">
-                            {this.props.expense}
+                            <NumberFormat value={this.props.expense} displayType={'text'} thousandSeparator={true} thousandsGroupStyle='lakh' prefix={'₹'} />
+                            {/* {'₹' + this.props.expense} */}
                           </span>
                         </div>
                         <Col className="col-auto">
@@ -100,7 +104,10 @@ class Header extends React.Component {
                           >
                             Income
                           </CardTitle>
-                          <span className="h2 font-weight-bold mb-0">{this.props.income}</span>
+                          <span className="h2 font-weight-bold mb-0">
+                            <NumberFormat value={this.props.income} displayType={'text'} thousandSeparator={true} thousandsGroupStyle='lakh' prefix={'₹'} />
+                            {/* {'₹' + this.props.income} */}
+                          </span>
                         </div>
                         <Col className="col-auto">
                           <div className="icon icon-shape bg-yellow text-white rounded-circle shadow">
@@ -129,7 +136,7 @@ class Header extends React.Component {
                             Monthly Savings
                           </CardTitle>
                           <span className="h2 font-weight-bold mb-0">
-                            {this.props.monthly_savings}
+                            {Math.round(this.props.monthly_savings) + '%'}
                           </span>
                         </div>
                         <Col className="col-auto">
