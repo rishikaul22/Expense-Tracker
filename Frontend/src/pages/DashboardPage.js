@@ -42,11 +42,14 @@ import Header from "components/Headers/Header.js";
 
 import AdminNavbar from '../components/Navbars/AdminNavbar'
 import AdminFooter from '../components/Footers/AdminFooter'
+import axios from "axios";
 
 class DashboardPage extends React.Component {
 
     names = ["Priyav", "Harsh", "Rahul", "Rishi", "Vrutik"];
+    userid = this.props.location.state.id
     token = this.props.location.state.access_token
+    profileName = this.props.location.state.name
     incomeData = {
         labels: ["Jan", "Feb", "March", "April", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
         datasets: [
@@ -73,11 +76,20 @@ class DashboardPage extends React.Component {
             activeNav: 1,
             chartExample1Data: "data1",
             isIncome: true,
-            income: true
+            income: true,
+            loading: false
         };
         if (window.Chart) {
             parseOptions(Chart, chartOptions());
         }
+    }
+    res = axios.get()
+    async componentDidMount() {
+        this.setState({ ...this.state, loading: true })
+        const res = await axios.get(`https://cors-anywhere.herokuapp.com/https://rpk-expense-tracker.herokuapp.com/dashboard/${this.userid}`, { headers: { Authorization: this.token } }).then((res) => {
+            console.log(res)
+            this.setState({ ...this.state, loading: false })
+        })
     }
     toggleNavs = (e, index) => {
         e.preventDefault();
@@ -100,6 +112,7 @@ class DashboardPage extends React.Component {
                         {...this.props}
                         brandText="Dashboard"
                         token={this.token}
+                        name={this.profileName}
                     />
                     <Header />
                     {/* Page content */}

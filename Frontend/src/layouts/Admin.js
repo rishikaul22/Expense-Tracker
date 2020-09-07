@@ -28,7 +28,7 @@ import routes from "routes.js";
 import Index from "views/Index";
 
 class Admin extends React.Component {
-  token = this.props.location.state.access_token
+
   componentDidUpdate(e) {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;

@@ -42,7 +42,9 @@ class Login extends React.Component {
       loginPassword: '',
       loginUsername: '',
       loginSuccess: false,
-      token: ''
+      token: '',
+      name: '',
+      id: 0
 
     };
   }
@@ -57,7 +59,7 @@ class Login extends React.Component {
     console.log(user)
     const res = await axios.post('https://cors-anywhere.herokuapp.com/https://rpk-expense-tracker.herokuapp.com/login', user).then((response) => {
       console.log(response)
-      this.setState({ ...this.state, token: `Bearer ${response.data.access_token}`, loginSuccess: true, })
+      this.setState({ ...this.state, token: `Bearer ${response.data.access_token}`, loginSuccess: true, name: response.data.name, id: response.data.id })
     }).catch((err) => {
       console.log(err)
     })
@@ -70,7 +72,7 @@ class Login extends React.Component {
       console.log(this.state.loginSuccess)
       return (<Redirect to={{
         pathname: '/dashboard',
-        state: { access_token: this.state.token }
+        state: { access_token: this.state.token, name: this.state.name, id: this.state.id }
       }} />)
     }
     return (

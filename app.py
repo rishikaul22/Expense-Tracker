@@ -172,6 +172,8 @@ class UserExpense(Resource):
     @cross_origin(origin='*', support_credentials=True)
     def post(self, user_id):
         data = request.get_json()
+        if not data:
+            return {'message': 'Data empty'}
         expense = Expense(user_id=user_id,
                           description=data['description'], amount=data['amount'], type=data['type'], day=data['day'], month=data['month'], year=data['year'])
         db.session.add(expense)
