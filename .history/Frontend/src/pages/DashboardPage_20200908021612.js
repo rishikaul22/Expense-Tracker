@@ -284,7 +284,7 @@ class DashboardPage extends React.Component {
                                                     }}
                                                     size="sm"
                                                 >
-                                                    {this.state.showMore ? "Show Less" : "Show More"}
+                                                    {this.state.showMore ? "Show less" : "Show More"}
                                                 </Button>
                                             </div>
                                         </Row>

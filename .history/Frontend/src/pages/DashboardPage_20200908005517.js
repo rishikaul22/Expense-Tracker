@@ -78,9 +78,7 @@ class DashboardPage extends React.Component {
             isIncome: true,
             income: true,
             loading: false,
-            data: {},
-            expenses : [],
-            showMore : false
+            data: {}
         };
         if (window.Chart) {
             parseOptions(Chart, chartOptions());
@@ -91,7 +89,7 @@ class DashboardPage extends React.Component {
         this.setState({ ...this.state, loading: true })
         const res = await axios.get(`https://cors-anywhere.herokuapp.com/https://rpk-expense-tracker.herokuapp.com/dashboard/${this.userid}`, { headers: { Authorization: this.token } }).then((res) => {
             console.log(res)
-            this.setState({ ...this.state, loading: false, data: res.data, expenses: res.data.transactions })
+            this.setState({ ...this.state, loading: false, data: res.data })
         })
     }
     toggleNavs = (e, index) => {
@@ -108,7 +106,6 @@ class DashboardPage extends React.Component {
         console.log(this.state.income);
     };
     render() {
-        console.log(this.state.showMore);      
         return (
             <>
                 <div className="main-content" ref="mainContent">
@@ -129,7 +126,7 @@ class DashboardPage extends React.Component {
                                             <div className="col">
                                                 <h6 className="text-uppercase text-light ls-1 mb-1">
                                                     Overview
-                                                </h6>
+                      </h6>
                                                 <h2 className="text-white mb-0">Transaction Analysis</h2>
                                             </div>
                                             <div className="col">
@@ -276,16 +273,11 @@ class DashboardPage extends React.Component {
                                                 <Button
                                                     color="primary"
                                                     href="#pablo"
-                                                    onClick={e => {
-                                                      this.setState({
-                                                        ...this.state,
-                                                        showMore : !this.state.showMore
-                                                      })
-                                                    }}
+                                                    onClick={e => e.preventDefault()}
                                                     size="sm"
                                                 >
-                                                    {this.state.showMore ? "Show Less" : "Show More"}
-                                                </Button>
+                                                    See all
+                      </Button>
                                             </div>
                                         </Row>
                                     </CardHeader>
@@ -300,44 +292,17 @@ class DashboardPage extends React.Component {
                                         </thead>
                                         <tbody>
                                             {
-                                              this.state.showMore ? this.state.expenses.map(expense => (
-                                                <tr>
-                                                    {
-                                                      expense.type == "Income" ? (<th scope="row" style={{ color: "green"}}>{expense.type}</th>)
-                                                      : <th scope="row" style={{ color: "red"}}>{expense.type}</th>
-                                                    }
-                                                    <td>{expense.description}</td>
-                                                    <td>{expense.day} / {expense.month} / {expense.year}</td>
-                                                    <td>
-                                                      {
-                                                        expense.type == "Income" ? (<i className="fas fa-arrow-up text-success mr-3" />)
-                                                        : (<i className="fas fa-arrow-down text-warning mr-3" />)
-                                                      }
-                                                      {" "}
-                                                      {expense.amount}
-                                                    </td>
-                                                </tr>
-                                              )
-                                              ) : 
-                                              this.state.expenses.slice(0,5).map(expense => (
-                                                <tr>
-                                                    {
-                                                      expense.type == "Income" ? (<th scope="row" style={{ color: "green"}}>{expense.type}</th>)
-                                                      : <th scope="row" style={{ color: "red"}}>{expense.type}</th>
-                                                    }
-                                                    <td>{expense.description}</td>
-                                                    <td>{expense.day} / {expense.month} / {expense.year}</td>
-                                                    <td>
-                                                      {
-                                                        expense.type == "Income" ? (<i className="fas fa-arrow-up text-success mr-3" />)
-                                                        : (<i className="fas fa-arrow-down text-warning mr-3" />)
-                                                      }
-                                                      {" "}
-                                                      {expense.amount}
-                                                    </td>
-                                                </tr>
-                                              )
-                                              )
+                                                this.names.map(name => (
+                                                    <tr>
+                                                        <th scope="row">{name}</th>
+                                                        <td>4,569</td>
+                                                        <td>340</td>
+                                                        <td>
+                                                            <i className="fas fa-arrow-up text-success mr-3" />{" "}
+                            46,53%
+                          </td>
+                                                    </tr>
+                                                ))
                                             }
                                             {/* <tr>
                       <th scope="row">{this.names[0]}</th>

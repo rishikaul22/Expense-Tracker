@@ -128,7 +128,7 @@ class DashBoard(Resource):
                                  'amount': expense_list[i].amount,
                                  "year": expense_list[i].year,
                                  'type': expense_list[i].type})
-        print(expense_data)
+        # print(expense_data)
         df = pd.DataFrame.from_dict(expense_data)
         print(df)
 
@@ -142,30 +142,6 @@ class DashBoard(Resource):
             ['month', 'amount']].to_dict()
         expensedf = pd.DataFrame(df.loc[df['type'] == 'Expense'])[
             ['month', 'amount']].to_dict()
-
-        # current_month = datetime.datetime.now().month
-        # monthlyincome = 0
-        # monthlyexpense = 0
-        # incomedf = dict()
-        # expensedf = dict()
-
-        # for data in expense_data:
-        #     if data["type"] == "Income":
-        #         if data["month"] == current_month:
-        #             monthlyincome += data["amount"]
-        #         elif data["month"] in incomedf:
-        #             incomedf[data["month"]] = incomedf[data["month"]] + data["amount"]
-        #         else:
-        #             incomedf[data["month"]] = data["amount"]
-
-        #     elif data["type"] == "Expense":
-        #         if data["month"] == current_month:
-        #             monthlyexpense += data["amount"]
-        #         elif data["month"] in expensedf:
-        #             expensedf[data["month"]] = expensedf[data["month"]] + data["amount"]
-        #         else:
-        #             expensedf[data["month"]] = data["amount"]
-
         if float(monthlyincome) == 0 and float(monthlyexpense) == 0:
             monthly_save = 0
         elif float(monthlyincome) == 0:

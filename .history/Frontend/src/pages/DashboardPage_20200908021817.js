@@ -284,7 +284,7 @@ class DashboardPage extends React.Component {
                                                     }}
                                                     size="sm"
                                                 >
-                                                    {this.state.showMore ? "Show Less" : "Show More"}
+                                                    {this.state.showMore ? "Show less" : "Show More"}
                                                 </Button>
                                             </div>
                                         </Row>
@@ -300,7 +300,7 @@ class DashboardPage extends React.Component {
                                         </thead>
                                         <tbody>
                                             {
-                                              this.state.showMore ? this.state.expenses.map(expense => (
+                                              this.state.expenses.map(expense => (
                                                 <tr>
                                                     {
                                                       expense.type == "Income" ? (<th scope="row" style={{ color: "green"}}>{expense.type}</th>)
@@ -318,26 +318,26 @@ class DashboardPage extends React.Component {
                                                     </td>
                                                 </tr>
                                               )
-                                              ) : 
-                                              this.state.expenses.slice(0,5).map(expense => (
-                                                <tr>
-                                                    {
-                                                      expense.type == "Income" ? (<th scope="row" style={{ color: "green"}}>{expense.type}</th>)
-                                                      : <th scope="row" style={{ color: "red"}}>{expense.type}</th>
-                                                    }
-                                                    <td>{expense.description}</td>
-                                                    <td>{expense.day} / {expense.month} / {expense.year}</td>
-                                                    <td>
-                                                      {
-                                                        expense.type == "Income" ? (<i className="fas fa-arrow-up text-success mr-3" />)
-                                                        : (<i className="fas fa-arrow-down text-warning mr-3" />)
-                                                      }
-                                                      {" "}
-                                                      {expense.amount}
-                                                    </td>
-                                                </tr>
-                                              )
-                                              )
+                                              ) 
+                                              // this.state.expenses.slice(0,5).map(expense => (
+                                              //   <tr>
+                                              //       {
+                                              //         expense.type == "Income" ? (<th scope="row" style={{ color: "green"}}>{expense.type}</th>)
+                                              //         : <th scope="row" style={{ color: "red"}}>{expense.type}</th>
+                                              //       }
+                                              //       <td>{expense.description}</td>
+                                              //       <td>{expense.day} / {expense.month} / {expense.year}</td>
+                                              //       <td>
+                                              //         {
+                                              //           expense.type == "Income" ? (<i className="fas fa-arrow-up text-success mr-3" />)
+                                              //           : (<i className="fas fa-arrow-down text-warning mr-3" />)
+                                              //         }
+                                              //         {" "}
+                                              //         {expense.amount}
+                                              //       </td>
+                                              //   </tr>
+                                              // )
+                                              // )
                                             }
                                             {/* <tr>
                       <th scope="row">{this.names[0]}</th>

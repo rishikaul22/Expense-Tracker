@@ -79,8 +79,7 @@ class DashboardPage extends React.Component {
             income: true,
             loading: false,
             data: {},
-            expenses : [],
-            showMore : false
+            expenses : []
         };
         if (window.Chart) {
             parseOptions(Chart, chartOptions());
@@ -108,7 +107,8 @@ class DashboardPage extends React.Component {
         console.log(this.state.income);
     };
     render() {
-        console.log(this.state.showMore);      
+
+      
         return (
             <>
                 <div className="main-content" ref="mainContent">
@@ -276,15 +276,10 @@ class DashboardPage extends React.Component {
                                                 <Button
                                                     color="primary"
                                                     href="#pablo"
-                                                    onClick={e => {
-                                                      this.setState({
-                                                        ...this.state,
-                                                        showMore : !this.state.showMore
-                                                      })
-                                                    }}
+                                                    onClick={e => e.preventDefault()}
                                                     size="sm"
                                                 >
-                                                    {this.state.showMore ? "Show Less" : "Show More"}
+                                                    See all
                                                 </Button>
                                             </div>
                                         </Row>
@@ -300,44 +295,21 @@ class DashboardPage extends React.Component {
                                         </thead>
                                         <tbody>
                                             {
-                                              this.state.showMore ? this.state.expenses.map(expense => (
-                                                <tr>
-                                                    {
-                                                      expense.type == "Income" ? (<th scope="row" style={{ color: "green"}}>{expense.type}</th>)
-                                                      : <th scope="row" style={{ color: "red"}}>{expense.type}</th>
-                                                    }
-                                                    <td>{expense.description}</td>
-                                                    <td>{expense.day} / {expense.month} / {expense.year}</td>
-                                                    <td>
-                                                      {
-                                                        expense.type == "Income" ? (<i className="fas fa-arrow-up text-success mr-3" />)
-                                                        : (<i className="fas fa-arrow-down text-warning mr-3" />)
-                                                      }
-                                                      {" "}
-                                                      {expense.amount}
-                                                    </td>
-                                                </tr>
-                                              )
-                                              ) : 
-                                              this.state.expenses.slice(0,5).map(expense => (
-                                                <tr>
-                                                    {
-                                                      expense.type == "Income" ? (<th scope="row" style={{ color: "green"}}>{expense.type}</th>)
-                                                      : <th scope="row" style={{ color: "red"}}>{expense.type}</th>
-                                                    }
-                                                    <td>{expense.description}</td>
-                                                    <td>{expense.day} / {expense.month} / {expense.year}</td>
-                                                    <td>
-                                                      {
-                                                        expense.type == "Income" ? (<i className="fas fa-arrow-up text-success mr-3" />)
-                                                        : (<i className="fas fa-arrow-down text-warning mr-3" />)
-                                                      }
-                                                      {" "}
-                                                      {expense.amount}
-                                                    </td>
-                                                </tr>
-                                              )
-                                              )
+                                                this.state.expenses.map(expense => (
+                                                    <tr>
+                                                        <th scope="row">{expense.type}</th>
+                                                        <td>{expense.description}</td>
+                                                        <td>{expense.day} / {expense.month} / {expense.year}</td>
+                                                        <td>
+                                                          {
+                                                            expense.type == "Income" ? (<i className="fas fa-arrow-up text-success mr-3" />)
+                                                            : (<i className="fas fa-arrow-down text-warning mr-3" />)
+                                                          }
+                                                          {" "}
+                                                          {expense.amount}
+                                                        </td>
+                                                    </tr>
+                                                ))
                                             }
                                             {/* <tr>
                       <th scope="row">{this.names[0]}</th>
