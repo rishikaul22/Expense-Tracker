@@ -17,7 +17,7 @@
 */
 import React from "react";
 import Lottie from "react-lottie";
-
+import * as loginloading from '../../animations/loginloading.json'
 // reactstrap components
 import {
   Button,
@@ -35,7 +35,14 @@ import {
 } from "reactstrap";
 import { Link, Redirect } from "react-router-dom";
 import axios from "axios";
-
+const defaultOptions = {
+  loop: true,
+  autoplay: true,
+  animationData: loginloading.default,
+  rendererSettings: {
+    preserveAspectRatio: "xMidYMid slice"
+  }
+}
 class Login extends React.Component {
   constructor(props) {
     super(props);
@@ -167,9 +174,9 @@ class Login extends React.Component {
                   </label>
                 </div> */}
               <div className="text-center">
-                <Button className="my-4" color="primary" type="button" onClick={this.signInUser} disabled={this.state.loading}>
-                  Sign in
-                  </Button>
+                {!this.state.loading ? <Button className="my-4" color="primary" type="button" onClick={this.signInUser} disabled={this.state.loading}> Sign in
+                  </Button> : <Lottie options={defaultOptions} height={100} width={100} />}
+
               </div>
             </Form>
             <Row>
