@@ -133,39 +133,39 @@ class DashBoard(Resource):
         df = pd.DataFrame.from_dict(expense_data)
         print(df)
 
-        current_month = datetime.datetime.now().month
-        monthlyincome = df.loc[(df['type'] == 'Income') & (
-            df['month'] == current_month)]['amount'].sum()
-        monthlyexpense = df.loc[(df['type'] == 'Expense') & (
-            df['month'] == current_month)]['amount'].sum()
-
-        incomedf = pd.DataFrame(df.loc[df['type'] == 'Income'])[
-            ['month', 'amount']].to_dict()
-        expensedf = pd.DataFrame(df.loc[df['type'] == 'Expense'])[
-            ['month', 'amount']].to_dict()
-
         # current_month = datetime.datetime.now().month
-        # monthlyincome = 0
-        # monthlyexpense = 0
-        # incomedf = dict()
-        # expensedf = dict()
+        # monthlyincome = df.loc[(df['type'] == 'Income') & (
+        #     df['month'] == current_month)]['amount'].sum()
+        # monthlyexpense = df.loc[(df['type'] == 'Expense') & (
+        #     df['month'] == current_month)]['amount'].sum()
 
-        # for data in expense_data:
-        #     if data["type"] == "Income":
-        #         if data["month"] == current_month:
-        #             monthlyincome += data["amount"]
-        #         elif data["month"] in incomedf:
-        #             incomedf[data["month"]] = incomedf[data["month"]] + data["amount"]
-        #         else:
-        #             incomedf[data["month"]] = data["amount"]
+        # incomedf = pd.DataFrame(df.loc[df['type'] == 'Income'])[
+        #     ['month', 'amount']].to_dict()
+        # expensedf = pd.DataFrame(df.loc[df['type'] == 'Expense'])[
+        #     ['month', 'amount']].to_dict()
 
-        #     elif data["type"] == "Expense":
-        #         if data["month"] == current_month:
-        #             monthlyexpense += data["amount"]
-        #         elif data["month"] in expensedf:
-        #             expensedf[data["month"]] = expensedf[data["month"]] + data["amount"]
-        #         else:
-        #             expensedf[data["month"]] = data["amount"]
+        current_month = datetime.datetime.now().month
+        monthlyincome = 0
+        monthlyexpense = 0
+        incomedf = dict()
+        expensedf = dict()
+
+        for data in expense_data:
+            if data["type"] == "Income":
+                if data["month"] == current_month:
+                    monthlyincome += data["amount"]
+                if data["month"] in incomedf:
+                    incomedf[data["month"]] = incomedf[data["month"]] + data["amount"]
+                else:
+                    incomedf[data["month"]] = data["amount"]
+
+            elif data["type"] == "Expense":
+                if data["month"] == current_month:
+                    monthlyexpense += data["amount"]
+                if data["month"] in expensedf:
+                    expensedf[data["month"]] = expensedf[data["month"]] + data["amount"]
+                else:
+                    expensedf[data["month"]] = data["amount"]
 
         if float(monthlyincome) == 0 and float(monthlyexpense) == 0:
             monthly_save = 0
@@ -238,8 +238,8 @@ class UserLogout(Resource):
 
 class GetAllExpenses(Resource):
 
-    @jwt_required
-    @cross_origin(origin='*', support_credentials=True)
+    # @jwt_required
+    # @cross_origin(origin='*', support_credentials=True)
     def get(self):
         expense_list = Expense.query.all()
         expense_data = []
