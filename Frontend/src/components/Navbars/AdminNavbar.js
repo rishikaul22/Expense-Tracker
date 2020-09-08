@@ -15,8 +15,8 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React from "react";
-import { Link, Redirect } from "react-router-dom";
+import React from 'react';
+import { Link, Redirect } from 'react-router-dom';
 // reactstrap components
 import {
   DropdownMenu,
@@ -32,37 +32,45 @@ import {
   Navbar,
   Nav,
   Container,
-  Media
-} from "reactstrap";
-import axios from "axios";
+  Media,
+} from 'reactstrap';
+import axios from 'axios';
 
 class AdminNavbar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-
-      logoutSuccess: false
+      logoutSuccess: false,
     };
   }
   logOut = async () => {
-    const res = await axios.post('https://cors-anywhere.herokuapp.com/https://rpk-expense-tracker.herokuapp.com/logout', {}, { headers: { Authorization: this.props.token } }).then((response) => {
-      console.log(response)
-      this.setState({ ...this.state, logoutSuccess: true })
-    }).catch((err) => {
-      console.log(err)
-    })
-  }
+    const res = await axios
+      .post(
+        'https://cors-anywhere.herokuapp.com/https://rpk-expense-tracker.herokuapp.com/logout',
+        {},
+        { headers: { Authorization: this.props.token } }
+      )
+      .then((response) => {
+        console.log(response);
+        // localStorage.removeItem('Authorization');
+        // localStorage.removeItem('userid');
+        this.setState({ ...this.state, logoutSuccess: true });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   render() {
     if (this.state.logoutSuccess) {
-      return <Redirect to='/login' />
+      return <Redirect to='/login' />;
     }
     return (
       <>
-        <Navbar className="navbar-top navbar-dark" expand="md" id="navbar-main">
+        <Navbar className='navbar-top navbar-dark' expand='md' id='navbar-main'>
           <Container fluid>
             <Link
-              className="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block"
-              to="/"
+              className='h4 mb-0 text-white text-uppercase d-none d-lg-inline-block'
+              to='/'
             >
               {this.props.brandText}
             </Link>
@@ -78,24 +86,24 @@ class AdminNavbar extends React.Component {
                 </InputGroup>
               </FormGroup>
             </Form> */}
-            <Nav className="align-items-center d-none d-md-flex" navbar>
+            <Nav className='align-items-center d-none d-md-flex' navbar>
               <UncontrolledDropdown nav>
-                <DropdownToggle className="pr-0" nav>
-                  <Media className="align-items-center">
-                    <span className="avatar avatar-sm rounded-circle">
+                <DropdownToggle className='pr-0' nav>
+                  <Media className='align-items-center'>
+                    <span className='avatar avatar-sm rounded-circle'>
                       <img
-                        alt="..."
-                        src={require("assets/img/theme/team-4-800x800.jpg")}
+                        alt='...'
+                        src={require('assets/img/theme/team-4-800x800.jpg')}
                       />
                     </span>
-                    <Media className="ml-2 d-none d-lg-block">
-                      <span className="mb-0 text-sm font-weight-bold">
+                    <Media className='ml-2 d-none d-lg-block'>
+                      <span className='mb-0 text-sm font-weight-bold'>
                         {this.props.name}
                       </span>
                     </Media>
                   </Media>
                 </DropdownToggle>
-                <DropdownMenu className="dropdown-menu-arrow" right>
+                <DropdownMenu className='dropdown-menu-arrow' right>
                   {/* <DropdownItem className="noti-title" header tag="div">
                     <h6 className="text-overflow m-0">Welcome!</h6>
                   </DropdownItem>
@@ -116,11 +124,14 @@ class AdminNavbar extends React.Component {
                     <span>Support</span>
                   </DropdownItem> */}
                   {/* <DropdownItem divider /> */}
-                  <DropdownItem href="#pablo" onClick={e => {
-                    console.log('Logout')
-                    this.logOut()
-                  }}>
-                    <i className="ni ni-user-run" />
+                  <DropdownItem
+                    href='#pablo'
+                    onClick={(e) => {
+                      console.log('Logout');
+                      this.logOut();
+                    }}
+                  >
+                    <i className='ni ni-user-run' />
                     <span>Logout</span>
                   </DropdownItem>
                 </DropdownMenu>
