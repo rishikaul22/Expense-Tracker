@@ -1,5 +1,6 @@
 
 import React from "react";
+import * as moneyloading from '../animations/moneyloading.json'
 // node.js library that concatenates classes (strings)
 import classnames from "classnames";
 // javascipt plugin for creating charts
@@ -43,13 +44,21 @@ import Header from "components/Headers/Header.js";
 import AdminNavbar from '../components/Navbars/AdminNavbar'
 import AdminFooter from '../components/Footers/AdminFooter'
 import axios from "axios";
-
+import Lottie from "react-lottie";
+const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: moneyloading.default,
+    rendererSettings: {
+        preserveAspectRatio: "xMidYMid slice"
+    }
+}
 class DashboardPage extends React.Component {
 
     names = ["Priyav", "Harsh", "Rahul", "Rishi", "Vrutik"];
-    userid = this.props.location.state.id
-    token = this.props.location.state.access_token
-    profileName = this.props.location.state.name
+    // userid = this.props.location.state.id
+    // token = this.props.location.state.access_token
+    // profileName = this.props.location.state.name
     incomeData = {
         labels: ["Jan", "Feb", "March", "April", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
         datasets: [
@@ -79,8 +88,9 @@ class DashboardPage extends React.Component {
             income: true,
             loading: false,
             data: {},
-            expenses : [],
-            showMore : false
+            expenses: [],
+            showMore: false,
+            profileName: ''
         };
         if (window.Chart) {
             parseOptions(Chart, chartOptions());
@@ -89,9 +99,9 @@ class DashboardPage extends React.Component {
     res = axios.get()
     async componentDidMount() {
         this.setState({ ...this.state, loading: true })
-        const res = await axios.get(`https://cors-anywhere.herokuapp.com/https://rpk-expense-tracker.herokuapp.com/dashboard/${this.userid}`, { headers: { Authorization: this.token } }).then((res) => {
+        const res = await axios.get(`https://cors-anywhere.herokuapp.com/https://rpk-expense-tracker.herokuapp.com/dashboard/${localStorage.getItem('userid')}`, { headers: { Authorization: localStorage.getItem('Authorization') } }).then((res) => {
             console.log(res)
-            this.setState({ ...this.state, loading: false, data: res.data, expenses: res.data.transactions })
+            this.setState({ ...this.state, loading: false, data: res.data, expenses: res.data.transactions, profileName: res.data.name })
         })
     }
     toggleNavs = (e, index) => {
@@ -108,15 +118,22 @@ class DashboardPage extends React.Component {
         console.log(this.state.income);
     };
     render() {
-        console.log(this.state.showMore);      
+        // console.log(this.state.showMore);
+        if (this.state.loading) {
+            console.log(this.state.loginSuccess)
+            return (<>
+                <Lottie options={defaultOptions} height={500} width={500} />
+            </>
+            )
+        }
         return (
             <>
                 <div className="main-content" ref="mainContent">
                     <AdminNavbar
                         {...this.props}
                         brandText="Dashboard"
-                        token={this.token}
-                        name={this.profileName}
+                        token={localStorage.getItem('Authorization')}
+                        name={this.state.profileName}
                     />
                     <Header monthly_savings={this.state.data.monthly_savings} income={this.state.data.income} wallet={this.state.data.wallet} expense={this.state.data.expense} />
                     {/* Page content */}
@@ -277,10 +294,10 @@ class DashboardPage extends React.Component {
                                                     color="primary"
                                                     href="#pablo"
                                                     onClick={e => {
-                                                      this.setState({
-                                                        ...this.state,
-                                                        showMore : !this.state.showMore
-                                                      })
+                                                        this.setState({
+                                                            ...this.state,
+                                                            showMore: !this.state.showMore
+                                                        })
                                                     }}
                                                     size="sm"
                                                 >
@@ -300,44 +317,44 @@ class DashboardPage extends React.Component {
                                         </thead>
                                         <tbody>
                                             {
-                                              this.state.showMore ? this.state.expenses.map(expense => (
-                                                <tr>
-                                                    {
-                                                      expense.type == "Income" ? (<th scope="row" style={{ color: "green"}}>{expense.type}</th>)
-                                                      : <th scope="row" style={{ color: "red"}}>{expense.type}</th>
-                                                    }
-                                                    <td>{expense.description}</td>
-                                                    <td>{expense.day} / {expense.month} / {expense.year}</td>
-                                                    <td>
-                                                      {
-                                                        expense.type == "Income" ? (<i className="fas fa-arrow-up text-success mr-3" />)
-                                                        : (<i className="fas fa-arrow-down text-warning mr-3" />)
-                                                      }
-                                                      {" "}
-                                                      {expense.amount}
-                                                    </td>
-                                                </tr>
-                                              )
-                                              ) : 
-                                              this.state.expenses.slice(0,5).map(expense => (
-                                                <tr>
-                                                    {
-                                                      expense.type == "Income" ? (<th scope="row" style={{ color: "green"}}>{expense.type}</th>)
-                                                      : <th scope="row" style={{ color: "red"}}>{expense.type}</th>
-                                                    }
-                                                    <td>{expense.description}</td>
-                                                    <td>{expense.day} / {expense.month} / {expense.year}</td>
-                                                    <td>
-                                                      {
-                                                        expense.type == "Income" ? (<i className="fas fa-arrow-up text-success mr-3" />)
-                                                        : (<i className="fas fa-arrow-down text-warning mr-3" />)
-                                                      }
-                                                      {" "}
-                                                      {expense.amount}
-                                                    </td>
-                                                </tr>
-                                              )
-                                              )
+                                                this.state.showMore ? this.state.expenses.map(expense => (
+                                                    <tr>
+                                                        {
+                                                            expense.type == "Income" ? (<th scope="row" style={{ color: "green" }}>{expense.type}</th>)
+                                                                : <th scope="row" style={{ color: "red" }}>{expense.type}</th>
+                                                        }
+                                                        <td>{expense.description}</td>
+                                                        <td>{expense.day} / {expense.month} / {expense.year}</td>
+                                                        <td>
+                                                            {
+                                                                expense.type == "Income" ? (<i className="fas fa-arrow-up text-success mr-3" />)
+                                                                    : (<i className="fas fa-arrow-down text-warning mr-3" />)
+                                                            }
+                                                            {" "}
+                                                            {expense.amount}
+                                                        </td>
+                                                    </tr>
+                                                )
+                                                ) :
+                                                    this.state.expenses.slice(0, 5).map(expense => (
+                                                        <tr key={expense}>
+                                                            {
+                                                                expense.type == "Income" ? (<th scope="row" style={{ color: "green" }}>{expense.type}</th>)
+                                                                    : <th scope="row" style={{ color: "red" }}>{expense.type}</th>
+                                                            }
+                                                            <td>{expense.description}</td>
+                                                            <td>{expense.day} / {expense.month} / {expense.year}</td>
+                                                            <td>
+                                                                {
+                                                                    expense.type == "Income" ? (<i className="fas fa-arrow-up text-success mr-3" />)
+                                                                        : (<i className="fas fa-arrow-down text-warning mr-3" />)
+                                                                }
+                                                                {" "}
+                                                                {expense.amount}
+                                                            </td>
+                                                        </tr>
+                                                    )
+                                                    )
                                             }
                                             {/* <tr>
                       <th scope="row">{this.names[0]}</th>

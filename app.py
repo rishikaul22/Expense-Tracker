@@ -127,7 +127,8 @@ class DashBoard(Resource):
                                  'month': expense_list[i].month,
                                  'amount': expense_list[i].amount,
                                  "year": expense_list[i].year,
-                                 'type': expense_list[i].type})
+                                 'type': expense_list[i].type},
+                                "id": expense_list[i].id)
         print(expense_data)
         df = pd.DataFrame.from_dict(expense_data)
         print(df)
