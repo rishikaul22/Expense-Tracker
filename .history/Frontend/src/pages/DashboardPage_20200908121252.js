@@ -256,14 +256,7 @@ class DashboardPage extends React.Component {
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
                                                 </div>
-                                                <input class="form-control text" placeholder="date placeholder" type="date" name="date" onChange = {(e) => {
-                                                  var date = e.target.value
-                                                  console.log(date);
-                                                  var day = date.split("-")[0]
-                                                  var month = date.split("-")[1]
-                                                  var year = date.split("-")[2]
-                                                  console.log(day + " " + month + " " + year);
-                                                }}/>
+                                                <input class="form-control text" placeholder="date placeholder" type="date" name="date" onChange = {(e) => {e.target.value}}/>
                                             </div>
                                         </div>
                                         {this.state.isIncome == true ? (<button class="btn btn-block btn-success">Add Income</button>) : (<button class="btn btn-block btn-danger">Add Expense</button>)}

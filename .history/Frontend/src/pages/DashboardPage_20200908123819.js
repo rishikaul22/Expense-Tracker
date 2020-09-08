@@ -258,7 +258,6 @@ class DashboardPage extends React.Component {
                                                 </div>
                                                 <input class="form-control text" placeholder="date placeholder" type="date" name="date" onChange = {(e) => {
                                                   var date = e.target.value
-                                                  console.log(date);
                                                   var day = date.split("-")[0]
                                                   var month = date.split("-")[1]
                                                   var year = date.split("-")[2]
