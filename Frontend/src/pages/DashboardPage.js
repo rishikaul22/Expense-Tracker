@@ -284,11 +284,13 @@ class DashboardPage extends React.Component {
         var e = res.data.expensedf;
         var i = res.data.incomedf;
         var savings = [];
-        for (var m = 0; m < e.length; m++) {
-          if (i[m] - e[m] > 0) {
-            savings[m] = i[m] - e[m];
-          } else {
-            savings[m] = 0;
+        if (e && i) {
+          for (var m = 0; m < e.length; m++) {
+            if (i[m] - e[m] > 0) {
+              savings[m] = i[m] - e[m];
+            } else {
+              savings[m] = 0;
+            }
           }
         }
         console.log(savings);

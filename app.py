@@ -108,7 +108,7 @@ def getExpenses(user_id):
     expense_data = []
     print(expense_list)
     if not (expense_list):
-        return {"message": 'What are you doing?'}
+        return {"message": 'What are you doing?', "name": user.name}
     # for i in range(len(expense_list)):
     #     expense_data.append({'description': expense_list[i].description,
     #                          'amount': expense_list[i].amount,
