@@ -166,6 +166,20 @@ class DashBoard(Resource):
                     expensedf[data["month"]] = expensedf[data["month"]] + data["amount"]
                 else:
                     expensedf[data["month"]] = data["amount"]
+        
+        income_list =[]
+        expense_list =[]
+
+        for i in range(1,13):
+            if i not in incomedf:
+                income_list.append(0)
+            else:
+                income_list.append(incomedf[i])
+            if i not in expensedf:
+                expense_list.append(0)
+            else:
+                expense_list.append(expensedf[i])
+
 
         if float(monthlyincome) == 0 and float(monthlyexpense) == 0:
             monthly_save = 0
@@ -184,8 +198,8 @@ class DashBoard(Resource):
             "income": float(monthlyincome),
             "expense": float(monthlyexpense),
             "wallet": float(wallet),
-            "incomedf": incomedf,
-            "expensedf": expensedf,
+            "incomedf": income_list,
+            "expensedf": expense_list,
             "monthly_savings": monthly_save,
             "transactions": expense_data
         }
