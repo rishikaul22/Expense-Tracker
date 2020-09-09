@@ -1,5 +1,6 @@
 import React from 'react';
 import * as moneyloading from '../animations/moneyloading.json';
+import * as transactionloading from '../animations/transaction.json';
 // node.js library that concatenates classes (strings)
 import classnames from 'classnames';
 // javascipt plugin for creating charts
@@ -54,12 +55,51 @@ const defaultOptions = {
     preserveAspectRatio: 'xMidYMid slice',
   },
 };
+const transactionLoading = {
+  loop: true,
+  autoplay: true,
+  animationData: transactionloading.default,
+  rendererSettings: {
+    preserveAspectRatio: 'xMidYMid slice',
+  },
+};
 
 class DashboardPage extends React.Component {
   names = ['Priyav', 'Harsh', 'Rahul', 'Rishi', 'Vrutik'];
   //   userid = localStorage.getItem('userid');
   //   token = localStorage.getItem('Authorization');
   // profileName = this.props.location.state.name
+  addTransaction = async () => {
+    this.setState({ ...this.state, transactionLoader: true });
+    let transaction = {
+      amount: this.state.amount,
+      description: this.state.description,
+      type: this.state.type,
+      day: this.state.day,
+      month: this.state.month,
+      year: this.state.year,
+    };
+    console.log(transaction);
+    const res = await axios
+      .post(
+        `https://cors-anywhere.herokuapp.com/https://rpk-expense-tracker.herokuapp.com/${sessionStorage.getItem(
+          'userid'
+        )}`,
+        transaction,
+        { headers: { Authorization: sessionStorage.getItem('Authorization') } }
+      )
+      .then((response) => {
+        console.log(response);
+        // this.assignData(response);
+        setTimeout(() => {
+          this.assignData(response);
+        }, 2000);
+        this.setState({ ...this.state, transactionLoader: false });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   chartExample1 = {
     options: {
       scales: {
@@ -163,6 +203,13 @@ class DashboardPage extends React.Component {
       expenses: [],
       showMore: false,
       profileName: '',
+      description: '',
+      type: 'Income',
+      amount: null,
+      day: null,
+      month: null,
+      year: null,
+      transactionLoader: false,
       incomeData: {
         labels: [
           'Jan',
@@ -281,88 +328,91 @@ class DashboardPage extends React.Component {
       )
       .then((res) => {
         console.log(res);
-        var e = res.data.expensedf;
-        var i = res.data.incomedf;
-        var savings = [];
-        if (e && i) {
-          for (var m = 0; m < e.length; m++) {
-            if (i[m] - e[m] > 0) {
-              savings[m] = i[m] - e[m];
-            } else {
-              savings[m] = 0;
-            }
-          }
-        }
-        console.log(savings);
-        this.setState({
-          ...this.state,
-          income: true,
-          expense: true,
-          loading: false,
-          data: res.data,
-          expenses: res.data.transactions,
-          profileName: res.data.name,
-          expenseGraph: res.data.expensedf,
-          incomeGraph: res.data.incomedf,
-          chartExample2: {
-            options: {
-              scales: {
-                yAxes: [
-                  {
-                    ticks: {
-                      callback: function (value) {
-                        if (!(value % 10)) {
-                          //return '$' + value + 'k'
-                          return value;
-                        }
-                      },
-                    },
-                  },
-                ],
-              },
-              tooltips: {
-                callbacks: {
-                  label: function (item, data) {
-                    var label = data.datasets[item.datasetIndex].label || '';
-                    var yLabel = item.yLabel;
-                    var content = '';
-                    if (data.datasets.length > 1) {
-                      content += label;
-                    }
-                    content += yLabel;
-                    return content;
-                  },
-                },
-              },
-            },
-            data: {
-              labels: [
-                'Jan',
-                'Feb',
-                'March',
-                'April',
-                'May',
-                'Jun',
-                'Jul',
-                'Aug',
-                'Sep',
-                'Oct',
-                'Nov',
-                'Dec',
-              ],
-              datasets: [
-                {
-                  label: 'Sales',
-                  //data: [25, 20, 30, 22, 17, 29],
-                  data: savings,
-                  maxBarThickness: 10,
-                },
-              ],
-            },
-          },
-        });
+        this.assignData(res);
       });
   }
+  assignData = (res) => {
+    var e = res.data.expensedf;
+    var i = res.data.incomedf;
+    var savings = [];
+    if (e && i) {
+      for (var m = 0; m < e.length; m++) {
+        if (i[m] - e[m] > 0) {
+          savings[m] = i[m] - e[m];
+        } else {
+          savings[m] = 0;
+        }
+      }
+    }
+    console.log(savings);
+    this.setState({
+      ...this.state,
+      income: true,
+      expense: true,
+      loading: false,
+      data: res.data,
+      expenses: res.data.transactions,
+      profileName: res.data.name,
+      expenseGraph: res.data.expensedf,
+      incomeGraph: res.data.incomedf,
+      chartExample2: {
+        options: {
+          scales: {
+            yAxes: [
+              {
+                ticks: {
+                  callback: function (value) {
+                    if (!(value % 10)) {
+                      //return '$' + value + 'k'
+                      return value;
+                    }
+                  },
+                },
+              },
+            ],
+          },
+          tooltips: {
+            callbacks: {
+              label: function (item, data) {
+                var label = data.datasets[item.datasetIndex].label || '';
+                var yLabel = item.yLabel;
+                var content = '';
+                if (data.datasets.length > 1) {
+                  content += label;
+                }
+                content += yLabel;
+                return content;
+              },
+            },
+          },
+        },
+        data: {
+          labels: [
+            'Jan',
+            'Feb',
+            'March',
+            'April',
+            'May',
+            'Jun',
+            'Jul',
+            'Aug',
+            'Sep',
+            'Oct',
+            'Nov',
+            'Dec',
+          ],
+          datasets: [
+            {
+              label: 'Sales',
+              //data: [25, 20, 30, 22, 17, 29],
+              data: savings,
+              maxBarThickness: 10,
+            },
+          ],
+        },
+      },
+    });
+  };
   toggleNavs = (e, index) => {
     e.preventDefault();
 
@@ -581,7 +631,12 @@ class DashboardPage extends React.Component {
                           placeholder='Amount'
                           type='text'
                           autoComplete='new-email'
-                          onChange={(e) => console.log(e.target.value)}
+                          onChange={(e) => {
+                            this.setState({
+                              ...this.state,
+                              amount: Number(e.target.value),
+                            });
+                          }}
                         />
                       </InputGroup>
                     </FormGroup>
@@ -597,6 +652,12 @@ class DashboardPage extends React.Component {
                           placeholder='Description'
                           type='text'
                           autoComplete='new-password'
+                          onChange={(e) => {
+                            this.setState({
+                              ...this.state,
+                              description: e.target.value,
+                            });
+                          }}
                         />
                       </InputGroup>
                     </FormGroup>
@@ -626,7 +687,11 @@ class DashboardPage extends React.Component {
                           type='radio'
                           defaultChecked
                           onChange={(e) => {
-                            this.setState({ ...this.state, isIncome: true });
+                            this.setState({
+                              ...this.state,
+                              isIncome: true,
+                              type: 'Income',
+                            });
                             console.log(e.target.value);
                           }}
                         />
@@ -642,7 +707,11 @@ class DashboardPage extends React.Component {
                           value='Expense'
                           type='radio'
                           onChange={(e) => {
-                            this.setState({ ...this.state, isIncome: false });
+                            this.setState({
+                              ...this.state,
+                              isIncome: false,
+                              type: 'Expense',
+                            });
                             console.log(e.target.value);
                           }}
                         />
@@ -666,20 +735,34 @@ class DashboardPage extends React.Component {
                           onChange={(e) => {
                             var date = e.target.value;
                             console.log(date);
-                            var day = date.split('-')[0];
+                            var day = date.split('-')[2];
                             var month = date.split('-')[1];
-                            var year = date.split('-')[2];
+                            var year = date.split('-')[0];
                             console.log(day + ' ' + month + ' ' + year);
+                            this.setState({
+                              ...this.state,
+                              day: Number(day),
+                              month: Number(month),
+                              year: Number(year),
+                            });
                           }}
                         />
                       </div>
                     </div>
                     {this.state.isIncome == true ? (
-                      <button class='btn btn-block btn-success'>
+                      <button
+                        class='btn btn-block btn-success'
+                        onClick={this.addTransaction}
+                        disabled={this.state.transactionLoader}
+                      >
                         Add Income
                       </button>
                     ) : (
-                      <button class='btn btn-block btn-danger'>
+                      <button
+                        class='btn btn-block btn-danger'
+                        onClick={this.addTransaction}
+                        disabled={this.state.transactionLoader}
+                      >
                         Add Expense
                       </button>
                     )}
