@@ -62,7 +62,6 @@ class Login extends React.Component {
 
     let user = {
       username: this.state.loginUsername,
-
       password: this.state.loginPassword,
     };
 
@@ -90,7 +89,7 @@ class Login extends React.Component {
             name: response.data.name,
             id: response.data.id,
           });
-        }, 5000);
+        }, 4000);
       })
       .catch((err) => {
         console.log(err);

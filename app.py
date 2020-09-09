@@ -155,7 +155,8 @@ class DashBoard(Resource):
                 if data["month"] == current_month:
                     monthlyincome += data["amount"]
                 if data["month"] in incomedf:
-                    incomedf[data["month"]] = incomedf[data["month"]] + data["amount"]
+                    incomedf[data["month"]
+                             ] = incomedf[data["month"]] + data["amount"]
                 else:
                     incomedf[data["month"]] = data["amount"]
 
@@ -163,14 +164,15 @@ class DashBoard(Resource):
                 if data["month"] == current_month:
                     monthlyexpense += data["amount"]
                 if data["month"] in expensedf:
-                    expensedf[data["month"]] = expensedf[data["month"]] + data["amount"]
+                    expensedf[data["month"]
+                              ] = expensedf[data["month"]] + data["amount"]
                 else:
                     expensedf[data["month"]] = data["amount"]
-        
-        income_list =[]
-        expense_list =[]
 
-        for i in range(1,13):
+        income_list = []
+        expense_list = []
+
+        for i in range(1, 13):
             if i not in incomedf:
                 income_list.append(0)
             else:
@@ -179,7 +181,6 @@ class DashBoard(Resource):
                 expense_list.append(0)
             else:
                 expense_list.append(expensedf[i])
-
 
         if float(monthlyincome) == 0 and float(monthlyexpense) == 0:
             monthly_save = 0

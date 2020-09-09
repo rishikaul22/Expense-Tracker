@@ -334,13 +334,17 @@ class DashboardPage extends React.Component {
       )
       .then((res) => {
         console.log(res);
-        this.setState({
-          ...this.state,
-          loading: false,
-          data: res.data,
-          expenses: res.data.transactions,
-          profileName: res.data.name,
-        });
+        setTimeout(() => {
+          this.setState({
+            ...this.state,
+            loading: false,
+            data: res.data,
+            expenses: res.data.transactions,
+            profileName: res.data.name,
+            expenseGraphData: res.data.expensedf,
+            incomeGraphData: res.data.incomedf,
+          });
+        }, 2500);
       });
   }
   toggleNavs = (e, index) => {
