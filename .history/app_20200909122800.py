@@ -119,12 +119,12 @@ def getExpenses(user_id):
 
     for i in range(len(expense_list)):
         expense_data.append({'description': expense_list[i].description,
-                             'day': expense_list[i].day,
-                             'month': expense_list[i].month,
-                             'amount': expense_list[i].amount,
-                             "year": expense_list[i].year,
-                             'type': expense_list[i].type,
-                             "id": expense_list[i].id})
+                                'day': expense_list[i].day,
+                                'month': expense_list[i].month,
+                                'amount': expense_list[i].amount,
+                                "year": expense_list[i].year,
+                                'type': expense_list[i].type,
+                                "id": expense_list[i].id})
     print(expense_data)
     df = pd.DataFrame.from_dict(expense_data)
     print(df)
@@ -151,8 +151,7 @@ def getExpenses(user_id):
             if data["month"] == current_month:
                 monthlyincome += data["amount"]
             if data["month"] in incomedf:
-                incomedf[data["month"]] = incomedf[data["month"]] + \
-                    data["amount"]
+                incomedf[data["month"]] = incomedf[data["month"]] + data["amount"]
             else:
                 incomedf[data["month"]] = data["amount"]
 
@@ -160,15 +159,14 @@ def getExpenses(user_id):
             if data["month"] == current_month:
                 monthlyexpense += data["amount"]
             if data["month"] in expensedf:
-                expensedf[data["month"]
-                          ] = expensedf[data["month"]] + data["amount"]
+                expensedf[data["month"]] = expensedf[data["month"]] + data["amount"]
             else:
                 expensedf[data["month"]] = data["amount"]
+    
+    income_list =[]
+    expense_list =[]
 
-    income_list = []
-    expense_list = []
-
-    for i in range(1, 13):
+    for i in range(1,13):
         if i not in incomedf:
             income_list.append(0)
         else:
@@ -177,6 +175,7 @@ def getExpenses(user_id):
             expense_list.append(0)
         else:
             expense_list.append(expensedf[i])
+
 
     if float(monthlyincome) == 0 and float(monthlyexpense) == 0:
         monthly_save = 0
@@ -200,7 +199,6 @@ def getExpenses(user_id):
         "monthly_savings": monthly_save,
         "transactions": expense_data
     }
-
 
 class DashBoard(Resource):
 
