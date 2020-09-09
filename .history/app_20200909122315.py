@@ -221,10 +221,8 @@ class UserExpense(Resource):
                           description=data['description'], amount=data['amount'], type=data['type'], day=data['day'], month=data['month'], year=data['year'])
         db.session.add(expense)
         db.session.commit()
-        transactions = getExpenses(user_id)
-        transactions["message"] = 'Expense added successfully'
 
-        return transactions
+        return {'message': 'Expense added successfully'}
 
     @jwt_required
     @cross_origin(origin='*', support_credentials=True)
