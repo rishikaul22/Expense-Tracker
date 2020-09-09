@@ -10,9 +10,24 @@ import AuthFooter from "components/Footers/AuthFooter.js";
 
 import routes from "routes.js";
 import Login from "views/examples/Login";
+import axios from 'axios'
 
 class LoginPage extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            loginPassword: '',
+            loginUsername: '',
+            loginSuccess: false,
+            token: '',
+            name: '',
+            id: 0,
+            loading: false
+
+        };
+    }
+    com
     componentDidMount() {
         document.body.classList.add("bg-default");
     }
@@ -20,12 +35,13 @@ class LoginPage extends React.Component {
         document.body.classList.remove("bg-default");
     }
 
+
     render() {
         return (
             <>
                 <div className="main-content">
                     {/* <AuthNavbar /> */}
-                    <div className="header bg-gradient-info py-7 py-lg-8">
+                    <div className="header bg-gradient-info py-7 py-lg-8" >
                         {/* <Container>
               <div className="header-body text-center mb-7">
                 <Row className="justify-content-center">

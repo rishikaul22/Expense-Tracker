@@ -343,7 +343,7 @@ class DashboardPage extends React.Component {
                           Expense Analysis
                         </h2>
                       </div>
-                      {/* <div className='col'>
+                      <div className='col'>
                         <Nav className='justify-content-end' pills>
                           <NavItem>
                             <NavLink
@@ -371,7 +371,7 @@ class DashboardPage extends React.Component {
                             </NavLink>
                           </NavItem>
                         </Nav>
-                      </div> */}
+                      </div>
                     </Row>
                   </CardHeader>
                   <CardBody>
@@ -379,7 +379,7 @@ class DashboardPage extends React.Component {
                     <div className='chart'>
                       <Line
                         //data={this.graphData(this.state.income)}
-                        data={this.chartExample1["data1"]}
+                        data={this.chartExample1[this.state.chartExample1Data]}
                         options={this.chartExample1.options}
                         // getDatasetAtEvent={e => console.log(e)}
                       />

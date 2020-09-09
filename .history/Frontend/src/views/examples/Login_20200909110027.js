@@ -72,7 +72,7 @@ class Login extends React.Component {
         'https://cors-anywhere.herokuapp.com/https://rpk-expense-tracker.herokuapp.com/login',
         user
       )
-      .then((response) => {
+      .then(async(response) => {
         console.log(response);
         sessionStorage.removeItem('Authorization');
         sessionStorage.removeItem('userid');

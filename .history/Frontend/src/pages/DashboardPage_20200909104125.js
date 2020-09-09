@@ -72,7 +72,7 @@ class DashboardPage extends React.Component {
             ticks: {
               callback: function (value) {
                 if (!(value % 10)) {
-                  return 'Rs. ' + value;
+                  return 'Rs. ' + value + 'k';
                 }
               },
             },
@@ -90,7 +90,7 @@ class DashboardPage extends React.Component {
               content += label;
             }
 
-            content += 'Rs. ' + yLabel;
+            content += 'Rs. ' + yLabel + 'k';
             return content;
           },
         },
@@ -102,7 +102,7 @@ class DashboardPage extends React.Component {
         datasets: [
           {
             label: 'Performance',
-            data: this.state.expense ? this.state.expenseGraph : [0, 20, 40, 30, 15, 200, 20, 60, 60, 90, 160, 100],
+            data: [0, 20, 40, 30, 15, 200, 20, 60, 60, 90, 160, 100],
            
           },
         ],
@@ -114,7 +114,7 @@ class DashboardPage extends React.Component {
         datasets: [
           {
             label: 'Performance',
-            data: this.state.income ? this.state.incomeGraph : [0, 20, 40, 30, 15, 200, 20, 60, 60, 90, 160, 100],
+            data: [0, 20, 5, 25, 10, 30, 15, 40, 40],
             
           },
         ],
@@ -128,8 +128,7 @@ class DashboardPage extends React.Component {
       activeNav: 1,
       chartExample1Data: 'data1',
       isIncome: true,
-      income: false,
-      expense: false,
+      income: true,
       loading: false,
       data: {},
       expenses: [],
@@ -229,8 +228,6 @@ class DashboardPage extends React.Component {
         console.log(savings);
         this.setState({
           ...this.state,
-          income: true,
-          expense: true,
           loading: false,
           data: res.data,
           expenses: res.data.transactions,
@@ -376,11 +373,13 @@ class DashboardPage extends React.Component {
                   </CardHeader>
                   <CardBody>
                     {/* Chart */}
+
+                    
                     <div className='chart'>
                       <Line
                         //data={this.graphData(this.state.income)}
                         data={this.chartExample1["data1"]}
-                        options={this.chartExample1.options}
+                        options={this.chartExample3.options}
                         // getDatasetAtEvent={e => console.log(e)}
                       />
                     </div>
@@ -586,7 +585,7 @@ class DashboardPage extends React.Component {
                           Overview
                         </h6>
                         <h2 className='text-white mb-0'>
-                          Income Analysis
+                          Expense Analysis
                         </h2>
                       </div>
                       {/* <div className='col'>

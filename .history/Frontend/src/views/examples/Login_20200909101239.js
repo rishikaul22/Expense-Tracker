@@ -54,6 +54,8 @@ class Login extends React.Component {
       name: '',
       id: 0,
       loading: false,
+      incomeGraph : [],
+      expenseGraph : []
     };
   }
 
@@ -81,6 +83,20 @@ class Login extends React.Component {
           `Bearer ${response.data.access_token}`
         );
         sessionStorage.setItem('userid', response.data.id);
+        const res = await axios
+        .get(
+          `https://cors-anywhere.herokuapp.com/https://rpk-expense-tracker.herokuapp.com/dashboard/${response.data.id}`,
+          { headers: { Authorization: `Bearer ${response.data.access_token}` } }
+
+        )
+        .then((res) => {
+          console.log(res);
+          this.setState({
+            ...this.state,
+            expenseGraph : res.data.expensedf,
+            incomeGraph: res.data.incomedf,
+          });
+        });
         setTimeout(() => {
           console.log('Delay');
           this.setState({
@@ -108,6 +124,8 @@ class Login extends React.Component {
               access_token: this.state.token,
               name: this.state.name,
               id: this.state.id,
+              expenseGraph : this.state.expenseGraph,
+              incomeGraph : this.state.incomeGraph
             },
           }}
         />

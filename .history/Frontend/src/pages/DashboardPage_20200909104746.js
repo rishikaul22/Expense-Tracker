@@ -72,7 +72,7 @@ class DashboardPage extends React.Component {
             ticks: {
               callback: function (value) {
                 if (!(value % 10)) {
-                  return 'Rs. ' + value;
+                  return 'Rs. ' + value + 'k';
                 }
               },
             },
@@ -90,7 +90,7 @@ class DashboardPage extends React.Component {
               content += label;
             }
 
-            content += 'Rs. ' + yLabel;
+            content += 'Rs. ' + yLabel + 'k';
             return content;
           },
         },
@@ -102,7 +102,7 @@ class DashboardPage extends React.Component {
         datasets: [
           {
             label: 'Performance',
-            data: this.state.expense ? this.state.expenseGraph : [0, 20, 40, 30, 15, 200, 20, 60, 60, 90, 160, 100],
+            data: [0, 20, 40, 30, 15, 200, 20, 60, 60, 90, 160, 100],
            
           },
         ],
@@ -114,7 +114,7 @@ class DashboardPage extends React.Component {
         datasets: [
           {
             label: 'Performance',
-            data: this.state.income ? this.state.incomeGraph : [0, 20, 40, 30, 15, 200, 20, 60, 60, 90, 160, 100],
+            data: [0, 20, 5, 25, 10, 30, 15, 40, 40],
             
           },
         ],
@@ -376,11 +376,13 @@ class DashboardPage extends React.Component {
                   </CardHeader>
                   <CardBody>
                     {/* Chart */}
+
+                    
                     <div className='chart'>
                       <Line
                         //data={this.graphData(this.state.income)}
-                        data={this.chartExample1["data1"]}
-                        options={this.chartExample1.options}
+                        data={expense ? this.state.expenseGraph : this.chartExample1["data1"]}
+                        options={chartExample3.options}
                         // getDatasetAtEvent={e => console.log(e)}
                       />
                     </div>
@@ -627,7 +629,7 @@ class DashboardPage extends React.Component {
                     <div className='chart'>
                       <Line
                         //data={this.graphData(this.state.income)}
-                        data={this.chartExample1["data2"]}
+                        data={income ? this.state.incomeGraph : this.chartExample1["data2"]}
                         options={this.chartExample1.options}
                         // getDatasetAtEvent={e => console.log(e)}
                       />

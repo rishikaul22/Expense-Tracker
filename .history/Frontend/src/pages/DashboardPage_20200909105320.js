@@ -376,11 +376,13 @@ class DashboardPage extends React.Component {
                   </CardHeader>
                   <CardBody>
                     {/* Chart */}
+
+                    
                     <div className='chart'>
                       <Line
                         //data={this.graphData(this.state.income)}
                         data={this.chartExample1["data1"]}
-                        options={this.chartExample1.options}
+                        options={chartExample3.options}
                         // getDatasetAtEvent={e => console.log(e)}
                       />
                     </div>

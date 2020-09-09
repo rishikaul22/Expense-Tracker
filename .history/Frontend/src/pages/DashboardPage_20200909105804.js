@@ -376,6 +376,8 @@ class DashboardPage extends React.Component {
                   </CardHeader>
                   <CardBody>
                     {/* Chart */}
+
+                    
                     <div className='chart'>
                       <Line
                         //data={this.graphData(this.state.income)}
