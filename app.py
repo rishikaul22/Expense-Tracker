@@ -250,7 +250,7 @@ class UserExpense(Resource):
 
 
 class ExpenseSheet(Resource):
-    @jwt_required
+    # @jwt_required
     # @cross_origin(origin='*', support_credentials=True)
     def get(self, user_id):
         expense = Expense.query.filter_by(user_id=user_id).all()

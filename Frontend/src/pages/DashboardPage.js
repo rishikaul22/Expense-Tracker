@@ -440,15 +440,12 @@ class DashboardPage extends React.Component {
       return this.incomeData;
     } else return this.expenseData;
   }
-  async downloadSheet() {
-    const res = await axios
-      .get(
-        `https://cors-anywhere.herokuapp.com/https://rpk-expense-tracker.herokuapp.com/expense/${sessionStorage.getItem(
-          'userid'
-        )}`,
-        { headers: { Authorization: sessionStorage.getItem('Authorization') } }
-      )
-      .then((res) => {});
+  downloadSheet() {
+    window.open(
+      `https://cors-anywhere.herokuapp.com/https://rpk-expense-tracker.herokuapp.com/expense/${sessionStorage.getItem(
+        'userid'
+      )}`
+    );
   }
   render() {
     if (this.state.loading) {
