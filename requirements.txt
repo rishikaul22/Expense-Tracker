@@ -8,3 +8,4 @@ psycopg2
 numpy
 flask-cors
 pandas
+Flask-Excel
