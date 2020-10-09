@@ -11,6 +11,7 @@ from flask_cors import CORS, cross_origin
 from flask_jwt_extended import create_access_token, jwt_required, get_raw_jwt
 from flask_jwt_extended import JWTManager
 from werkzeug.security import safe_str_cmp
+import flask_excel as excel
 
 import datetime
 
@@ -34,7 +35,7 @@ app.config['JWT_BLACKLIST_ENABLED'] = True  # enable blacklist feature
 # allow blacklisting for access and refresh tokens
 app.config['JWT_BLACKLIST_TOKEN_CHECKS'] = ['access']
 jwt = JWTManager(app)
-
+excel.init_excel(app)
 ########### MODELS ##########
 
 
@@ -248,6 +249,27 @@ class UserExpense(Resource):
         return {'data': expense_data}
 
 
+class ExpenseSheet(Resource):
+    @jwt_required
+    # @cross_origin(origin='*', support_credentials=True)
+    def get(self, user_id):
+        expense = Expense.query.filter_by(user_id=user_id).all()
+        expense_data = [['Sr.', 'Description', 'Amount', 'Type', 'Date']]
+        print(expense)
+        if not (expense):
+            return {"message": 'What are you doing?'}
+
+        for i in range(len(expense)):
+            expense_data.append([
+                i+1, expense[i].description,
+                expense[i].amount,
+                expense[i].type,
+                str(int(expense[i].day)) + '/' + str(int(expense[i].month)) + '/' + str(int(expense[i].year))])
+
+        return excel.make_response_from_array(expense_data, "csv",
+                                              file_name="Expense Sheet")
+
+
 class UserLogout(Resource):
 
     @jwt_required
@@ -337,6 +359,7 @@ api.add_resource(UserRegister, "/register")
 api.add_resource(UserLogin, "/login")
 api.add_resource(UserLogout, "/logout")
 api.add_resource(DashBoard, '/dashboard/<int:user_id>')
+api.add_resource(ExpenseSheet, '/expense/<int:user_id>')
 
 if __name__ == "__main__":
     app.run(debug=True)
