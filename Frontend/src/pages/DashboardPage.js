@@ -94,7 +94,15 @@ class DashboardPage extends React.Component {
         setTimeout(() => {
           this.assignData(response);
         }, 2000);
-        this.setState({ ...this.state, transactionLoader: false });
+        this.setState({
+          ...this.state,
+          transactionLoader: false,
+          amount: '',
+          description: '',
+          day: null,
+          month: null,
+          year: null,
+        });
       })
       .catch((err) => {
         console.log(err);
@@ -205,7 +213,7 @@ class DashboardPage extends React.Component {
       profileName: '',
       description: '',
       type: 'Income',
-      amount: null,
+      amount: '',
       day: null,
       month: null,
       year: null,
@@ -432,6 +440,13 @@ class DashboardPage extends React.Component {
       return this.incomeData;
     } else return this.expenseData;
   }
+  downloadSheet() {
+    window.open(
+      `https://cors-anywhere.herokuapp.com/https://rpk-expense-tracker.herokuapp.com/expense/${sessionStorage.getItem(
+        'userid'
+      )}`
+    );
+  }
   render() {
     if (this.state.loading) {
       // console.log(this.state.loginSuccess)
@@ -630,6 +645,7 @@ class DashboardPage extends React.Component {
                         <Input
                           placeholder='Amount'
                           type='text'
+                          value={this.state.amount}
                           autoComplete='new-email'
                           onChange={(e) => {
                             this.setState({
@@ -651,6 +667,7 @@ class DashboardPage extends React.Component {
                         <Input
                           placeholder='Description'
                           type='text'
+                          value={this.state.description}
                           autoComplete='new-password'
                           onChange={(e) => {
                             this.setState({
@@ -836,7 +853,13 @@ class DashboardPage extends React.Component {
                       <div className='col text-right'>
                         <Button
                           color='primary'
-                          href='#pablo'
+                          onClick={this.downloadSheet}
+                          size='sm'
+                        >
+                          Download Expense Sheet
+                        </Button>
+                        <Button
+                          color='primary'
                           onClick={(e) => {
                             this.setState({
                               ...this.state,

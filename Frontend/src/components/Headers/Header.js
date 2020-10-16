@@ -15,41 +15,45 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React from "react";
-import { FaWallet, FaCreditCard } from "react-icons/fa";
-import { FcMoneyTransfer } from "react-icons/fc";
+import React from 'react';
+import { FaWallet, FaCreditCard } from 'react-icons/fa';
+import { FcMoneyTransfer } from 'react-icons/fc';
 // reactstrap components
-import { Card, CardBody, CardTitle, Container, Row, Col } from "reactstrap";
-import NumberFormat from "react-number-format";
+import { Card, CardBody, CardTitle, Container, Row, Col } from 'reactstrap';
+import NumberFormat from 'react-number-format';
 
 class Header extends React.Component {
   render() {
     return (
       <>
-        <div className="header bg-gradient-info pb-8 pt-5 pt-md-8">
+        <div className='header bg-gradient-info pb-8 pt-5 pt-md-8'>
           <Container fluid>
-            <div className="header-body">
+            <div className='header-body'>
               {/* Card stats */}
               <Row>
-                <Col lg="6" xl="3">
-                  <Card className="card-stats mb-4 mb-xl-0">
+                <Col lg='6' xl='3'>
+                  <Card className='card-stats mb-4 mb-xl-0'>
                     <CardBody>
                       <Row>
-                        <div className="col">
+                        <div className='col'>
                           <CardTitle
-                            tag="h5"
-                            className="text-uppercase text-muted mb-0"
+                            tag='h5'
+                            className='text-uppercase text-muted mb-0'
                           >
                             Wallet
                           </CardTitle>
-                          <span className="h2 font-weight-bold mb-0">
-
-                            <NumberFormat value={this.props.wallet} displayType={'text'} thousandSeparator={true} thousandsGroupStyle='lakh' prefix={'₹'} />
-
+                          <span className='h2 font-weight-bold mb-0'>
+                            <NumberFormat
+                              value={this.props.wallet ? this.props.wallet : 0}
+                              displayType={'text'}
+                              thousandSeparator={true}
+                              thousandsGroupStyle='lakh'
+                              prefix={'₹'}
+                            />
                           </span>
                         </div>
-                        <Col className="col-auto">
-                          <div className="icon icon-shape bg-primary text-white rounded-circle shadow">
+                        <Col className='col-auto'>
+                          <div className='icon icon-shape bg-primary text-white rounded-circle shadow'>
                             {/* <i className="fas fa-credit-card" /> */}
                             <FaWallet />
                           </div>
@@ -64,24 +68,32 @@ class Header extends React.Component {
                     </CardBody>
                   </Card>
                 </Col>
-                <Col lg="6" xl="3">
-                  <Card className="card-stats mb-4 mb-xl-0">
+                <Col lg='6' xl='3'>
+                  <Card className='card-stats mb-4 mb-xl-0'>
                     <CardBody>
                       <Row>
-                        <div className="col">
+                        <div className='col'>
                           <CardTitle
-                            tag="h5"
-                            className="text-uppercase text-muted mb-0"
+                            tag='h5'
+                            className='text-uppercase text-muted mb-0'
                           >
                             Expense
                           </CardTitle>
-                          <span className="h2 font-weight-bold mb-0">
-                            <NumberFormat value={this.props.expense} displayType={'text'} thousandSeparator={true} thousandsGroupStyle='lakh' prefix={'₹'} />
+                          <span className='h2 font-weight-bold mb-0'>
+                            <NumberFormat
+                              value={
+                                this.props.expense ? this.props.expense : 0
+                              }
+                              displayType={'text'}
+                              thousandSeparator={true}
+                              thousandsGroupStyle='lakh'
+                              prefix={'₹'}
+                            />
                             {/* {'₹' + this.props.expense} */}
                           </span>
                         </div>
-                        <Col className="col-auto">
-                          <div className="icon icon-shape bg-danger text-white rounded-circle shadow">
+                        <Col className='col-auto'>
+                          <div className='icon icon-shape bg-danger text-white rounded-circle shadow'>
                             {/* <i className="fas fa-chart-pie" /> */}
                             <FaCreditCard />
                           </div>
@@ -96,24 +108,30 @@ class Header extends React.Component {
                     </CardBody>
                   </Card>
                 </Col>
-                <Col lg="6" xl="3">
-                  <Card className="card-stats mb-4 mb-xl-0">
+                <Col lg='6' xl='3'>
+                  <Card className='card-stats mb-4 mb-xl-0'>
                     <CardBody>
                       <Row>
-                        <div className="col">
+                        <div className='col'>
                           <CardTitle
-                            tag="h5"
-                            className="text-uppercase text-muted mb-0"
+                            tag='h5'
+                            className='text-uppercase text-muted mb-0'
                           >
                             Income
                           </CardTitle>
-                          <span className="h2 font-weight-bold mb-0">
-                            <NumberFormat value={this.props.income} displayType={'text'} thousandSeparator={true} thousandsGroupStyle='lakh' prefix={'₹'} />
+                          <span className='h2 font-weight-bold mb-0'>
+                            <NumberFormat
+                              value={this.props.income ? this.props.income : 0}
+                              displayType={'text'}
+                              thousandSeparator={true}
+                              thousandsGroupStyle='lakh'
+                              prefix={'₹'}
+                            />
                             {/* {'₹' + this.props.income} */}
                           </span>
                         </div>
-                        <Col className="col-auto">
-                          <div className="icon icon-shape bg-green text-white rounded-circle shadow">
+                        <Col className='col-auto'>
+                          <div className='icon icon-shape bg-green text-white rounded-circle shadow'>
                             {/* <i className="fas fa-users" /> */}
                             <FcMoneyTransfer />
                           </div>
@@ -128,24 +146,28 @@ class Header extends React.Component {
                     </CardBody>
                   </Card>
                 </Col>
-                <Col lg="6" xl="3">
-                  <Card className="card-stats mb-4 mb-xl-0">
+                <Col lg='6' xl='3'>
+                  <Card className='card-stats mb-4 mb-xl-0'>
                     <CardBody>
                       <Row>
-                        <div className="col">
+                        <div className='col'>
                           <CardTitle
-                            tag="h5"
-                            className="text-uppercase text-muted mb-0"
+                            tag='h5'
+                            className='text-uppercase text-muted mb-0'
                           >
                             Monthly Savings
                           </CardTitle>
-                          <span className="h2 font-weight-bold mb-0">
-                            {Math.round(this.props.monthly_savings) + '%'}
+                          <span className='h2 font-weight-bold mb-0'>
+                            {Math.round(
+                              this.props.monthly_savings
+                                ? this.props.monthly_savings
+                                : 0
+                            ) + '%'}
                           </span>
                         </div>
-                        <Col className="col-auto">
-                          <div className="icon icon-shape bg-info text-white rounded-circle shadow">
-                            <i className="fas fa-percent" />
+                        <Col className='col-auto'>
+                          <div className='icon icon-shape bg-info text-white rounded-circle shadow'>
+                            <i className='fas fa-percent' />
                           </div>
                         </Col>
                       </Row>
