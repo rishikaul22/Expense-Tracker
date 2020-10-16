@@ -442,7 +442,7 @@ class DashboardPage extends React.Component {
   }
   downloadSheet() {
     window.open(
-      `https://cors-anywhere.herokuapp.com/https://rpk-expense-tracker.herokuapp.com/expense/${sessionStorage.getItem(
+      `https://rpk-expense-tracker.herokuapp.com/expense/${sessionStorage.getItem(
         'userid'
       )}`
     );

@@ -11,7 +11,7 @@ from flask_cors import CORS, cross_origin
 from flask_jwt_extended import create_access_token, jwt_required, get_raw_jwt
 from flask_jwt_extended import JWTManager
 from werkzeug.security import safe_str_cmp
-from flask_mail import Mail,Message
+from flask_mail import Mail, Message
 import flask_excel as excel
 
 import datetime
@@ -237,8 +237,9 @@ class UserExpense(Resource):
         db.session.add(expense)
         db.session.commit()
         user = User.query.get(user_id)
-        body = data['type']+' added amounting to '+ str(data['amount'])+'.' 
-        msg = Message(subject="Message from Expense-Tracker", body = body, recipients=['kay1872k@gmail.com'])
+        body = data['type']+' added amounting to ' + str(data['amount'])+'.'
+        msg = Message(subject="Message from Expense-Tracker",
+                      body=body, recipients=['rishi.kaul@spit.ac.in'])
         mail.send(msg)
         transactions = getExpenses(user_id)
         transactions["message"] = 'Expense added successfully'
