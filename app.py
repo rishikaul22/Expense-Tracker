@@ -11,6 +11,7 @@ from flask_cors import CORS, cross_origin
 from flask_jwt_extended import create_access_token, jwt_required, get_raw_jwt
 from flask_jwt_extended import JWTManager
 from werkzeug.security import safe_str_cmp
+from flask_mail import Mail,Message
 
 import datetime
 
@@ -33,6 +34,17 @@ app.config['JWT_SECRET_KEY'] = 'jose'
 app.config['JWT_BLACKLIST_ENABLED'] = True  # enable blacklist feature
 # allow blacklisting for access and refresh tokens
 app.config['JWT_BLACKLIST_TOKEN_CHECKS'] = ['access']
+
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USERNAME'] = 'rpk.happenings@gmail.com'
+app.config['MAIL_PASSWORD'] = 'Happenings123'
+app.config['MAIL_DEFAULT_SENDER'] = 'rpk.happenings@gmail.com'
+app.config['MAIL_ASCII_ATTACHMENTS'] = False
+app.config['MAIL_MAX_EMAILS'] = None
+mail = Mail(app)
+
 jwt = JWTManager(app)
 
 ########### MODELS ##########
@@ -223,6 +235,10 @@ class UserExpense(Resource):
                           description=data['description'], amount=data['amount'], type=data['type'], day=data['day'], month=data['month'], year=data['year'])
         db.session.add(expense)
         db.session.commit()
+        user = User.query.get(user_id)
+        body = data['type']+' added amounting to '+ str(data['amount'])+'.' 
+        msg = Message(subject="Message from Expense-Tracker", body = body, recipients=['kay1872k@gmail.com'])
+        mail.send(msg)
         transactions = getExpenses(user_id)
         transactions["message"] = 'Expense added successfully'
 
