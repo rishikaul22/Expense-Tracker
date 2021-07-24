@@ -238,7 +238,7 @@ class UserExpense(Resource):
         body = data['type']+' added amounting to ' + str(data['amount'])+'.'
         msg = Message(subject="Message from Expense-Tracker",
                       body=body, recipients=['rishi.kaul@spit.ac.in'])
-        mail.send(msg)
+        # mail.send(msg)
         transactions = getExpenses(user_id)
         transactions["message"] = 'Expense added successfully'
 
