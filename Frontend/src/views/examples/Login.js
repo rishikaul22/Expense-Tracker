@@ -68,7 +68,7 @@ class Login extends React.Component {
     console.log(user);
     const res = await axios
       .post(
-        'https://cors-anywhere.herokuapp.com/https://rpk-expense-tracker.herokuapp.com/login',
+        'https://rpk-expense-tracker.herokuapp.com/login',
         user
       )
       .then((response) => {

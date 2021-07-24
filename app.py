@@ -6,8 +6,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_restful import Resource, Api
 from flask_cors import CORS, cross_origin
-#from functools import wraps
-#from flask_jwt import JWT, jwt_required, current_identity
+
 from flask_jwt_extended import create_access_token, jwt_required, get_raw_jwt
 from flask_jwt_extended import JWTManager
 from werkzeug.security import safe_str_cmp
@@ -17,8 +16,7 @@ import flask_excel as excel
 import datetime
 
 app = Flask(__name__)
-cors = CORS(app, support_credentials=True, allow_headers=[
-    "Content-Type", "Authorization", "Access-Control-Allow-Credentials"])
+cors = CORS(app)
 app.config['SECRET_KEY'] = 'assembler'
 
 basedir = os.path.abspath(os.path.dirname(__file__))

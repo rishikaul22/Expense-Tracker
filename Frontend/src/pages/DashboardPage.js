@@ -1,13 +1,13 @@
 import React from 'react';
 import * as moneyloading from '../animations/moneyloading.json';
 import * as transactionloading from '../animations/transaction.json';
-// node.js library that concatenates classes (strings)
+
 import classnames from 'classnames';
-// javascipt plugin for creating charts
+
 import Chart from 'chart.js';
-// react plugin used to create charts
+
 import { Line, Bar } from 'react-chartjs-2';
-// reactstrap components
+
 import { FaRupeeSign } from 'react-icons/fa';
 import { CgNotes } from 'react-icons/cg';
 import {
@@ -82,7 +82,7 @@ class DashboardPage extends React.Component {
     console.log(transaction);
     const res = await axios
       .post(
-        `https://cors-anywhere.herokuapp.com/https://rpk-expense-tracker.herokuapp.com/${sessionStorage.getItem(
+        `https://rpk-expense-tracker.herokuapp.com/${sessionStorage.getItem(
           'userid'
         )}`,
         transaction,
@@ -329,7 +329,7 @@ class DashboardPage extends React.Component {
     this.setState({ ...this.state, loading: true });
     const res = await axios
       .get(
-        `https://cors-anywhere.herokuapp.com/https://rpk-expense-tracker.herokuapp.com/dashboard/${sessionStorage.getItem(
+        `https://rpk-expense-tracker.herokuapp.com/dashboard/${sessionStorage.getItem(
           'userid'
         )}`,
         { headers: { Authorization: sessionStorage.getItem('Authorization') } }
@@ -484,35 +484,6 @@ class DashboardPage extends React.Component {
                         </h6>
                         <h2 className='text-white mb-0'>Expense Analysis</h2>
                       </div>
-                      {/* <div className='col'>
-                        <Nav className='justify-content-end' pills>
-                          <NavItem>
-                            <NavLink
-                              className={classnames('py-2 px-3', {
-                                active: this.state.activeNav === 1,
-                              })}
-                              href='#pablo'
-                              onClick={(e) => this.toggleNavs(e, 1)}
-                            >
-                              <span className='d-none d-md-block'>Income</span>
-                              <span className='d-md-none'>M</span>
-                            </NavLink>
-                          </NavItem>
-                          <NavItem>
-                            <NavLink
-                              className={classnames('py-2 px-3', {
-                                active: this.state.activeNav === 2,
-                              })}
-                              data-toggle='tab'
-                              href='#pablo'
-                              onClick={(e) => this.toggleNavs(e, 2)}
-                            >
-                              <span className='d-none d-md-block'>Expense</span>
-                              <span className='d-md-none'>W</span>
-                            </NavLink>
-                          </NavItem>
-                        </Nav>
-                      </div> */}
                     </Row>
                   </CardHeader>
                   <CardBody>
@@ -522,72 +493,13 @@ class DashboardPage extends React.Component {
                         //data={this.graphData(this.state.income)}
                         data={this.chartExample1['data1']}
                         options={this.chartExample1.options}
-                        // getDatasetAtEvent={e => console.log(e)}
+                      // getDatasetAtEvent={e => console.log(e)}
                       />
                     </div>
                   </CardBody>
                 </Card>
               </Col>
-              {/* <Col className='mb-5 mb-xl-0' xl='4'>
-                <Card className='bg-gradient-default shadow'>
-                  <CardHeader className='bg-transparent'>
-                    <Row className='align-items-center'>
-                      <div className='col'>
-                        <h6 className='text-uppercase text-light ls-1 mb-1'>
-                          Overview
-                        </h6>
-                        <h2 className='text-white mb-0'>
-                          Transaction Analysis
-                        </h2>
-                      </div>
-                      <div className='col'>
-                        <Nav className='justify-content-end' pills>
-                          <NavItem>
-                            <NavLink
-                              className={classnames('py-2 px-3', {
-                                active: this.state.activeNav === 1,
-                              })}
-                              href='#pablo'
-                              onClick={(e) => this.toggleNavs(e, 1)}
-                            >
-                              <span className='d-none d-md-block'>Income</span>
-                              <span className='d-md-none'>M</span>
-                            </NavLink>
-                          </NavItem>
-                          <NavItem>
-                            <NavLink
-                              className={classnames('py-2 px-3', {
-                                active: this.state.activeNav === 2,
-                              })}
-                              data-toggle='tab'
-                              href='#pablo'
-                              onClick={(e) => this.toggleNavs(e, 2)}
-                            >
-                              <span className='d-none d-md-block'>Expense</span>
-                              <span className='d-md-none'>W</span>
-                            </NavLink>
-                          </NavItem>
-                        </Nav>
-                      </div>
-                    </Row>
-                  </CardHeader>
-                  <CardBody>
-                    
-                    <div className='chart'>
-                      <Line
-                        data={
-                          this.state.income
-                            ? this.state.incomeData
-                            : this.state.expenseData
-                        }
-                        //data={chartExample1[this.state.chartExample1Data]}
-                        options={this.chartExample1.options}
-                        // getDatasetAtEvent={e => console.log(e)}
-                      />
-                    </div>
-                  </CardBody>
-                </Card>
-              </Col> */}
+
               <Col xl='4'>
                 <Card className='shadow'>
                   <CardHeader className='bg-transparent'>
@@ -616,9 +528,6 @@ class DashboardPage extends React.Component {
                   <CardHeader className='bg-transparent'>
                     <Row className='align-items-center'>
                       <div className='col'>
-                        {/* <h6 className="text-uppercase text-muted ls-1 mb-1">
-                        Performance
-                      </h6> */}
                         {this.state.isIncome == true ? (
                           <h2 className='mb-0'>Add Income</h2>
                         ) : (
@@ -628,12 +537,6 @@ class DashboardPage extends React.Component {
                     </Row>
                   </CardHeader>
                   <CardBody>
-                    {/* <div className="chart">
-                      <Bar
-                        data={chartExample2.data}
-                        options={chartExample2.options}
-                      />
-                    </div> */}
                     <FormGroup className='mb-3'>
                       <InputGroup className='input-group-alternative'>
                         <InputGroupAddon addonType='prepend'>
@@ -679,22 +582,6 @@ class DashboardPage extends React.Component {
                       </InputGroup>
                     </FormGroup>
                     <Row>
-                      {/* <div className='ml-3'>
-                            <FormGroup check>
-                              <Label check>
-                                <Input type="radio" name="radio1" value="Income" onChange={(e) => console.log(e.target.value)} />{' '}
-                            Income
-                              </Label>
-                                </FormGroup>
-                              </div>
-                              <div className='ml-2'>
-                                <FormGroup check>
-                                  <Label check>
-                                    <Input type="radio" name="radio1" value="Expense" onChange={(e) => console.log(e.target.value)} />{' '}
-                                Expense
-                              </Label>
-                            </FormGroup>
-                          </div> */}
                       <div class='custom-control custom-control-alternative custom-radio mb-3 ml-3'>
                         <input
                           name='custom-radio-2'
@@ -798,35 +685,6 @@ class DashboardPage extends React.Component {
                         </h6>
                         <h2 className='text-white mb-0'>Income Analysis</h2>
                       </div>
-                      {/* <div className='col'>
-                        <Nav className='justify-content-end' pills>
-                          <NavItem>
-                            <NavLink
-                              className={classnames('py-2 px-3', {
-                                active: this.state.activeNav === 1,
-                              })}
-                              href='#pablo'
-                              onClick={(e) => this.toggleNavs(e, 1)}
-                            >
-                              <span className='d-none d-md-block'>Income</span>
-                              <span className='d-md-none'>M</span>
-                            </NavLink>
-                          </NavItem>
-                          <NavItem>
-                            <NavLink
-                              className={classnames('py-2 px-3', {
-                                active: this.state.activeNav === 2,
-                              })}
-                              data-toggle='tab'
-                              href='#pablo'
-                              onClick={(e) => this.toggleNavs(e, 2)}
-                            >
-                              <span className='d-none d-md-block'>Expense</span>
-                              <span className='d-md-none'>W</span>
-                            </NavLink>
-                          </NavItem>
-                        </Nav>
-                      </div> */}
                     </Row>
                   </CardHeader>
                   <CardBody>
@@ -837,7 +695,7 @@ class DashboardPage extends React.Component {
                         //data={this.graphData(this.state.income)}
                         data={this.chartExample1['data2']}
                         options={this.chartExample1.options}
-                        // getDatasetAtEvent={e => console.log(e)}
+                      // getDatasetAtEvent={e => console.log(e)}
                       />
                     </div>
                   </CardBody>
@@ -885,213 +743,60 @@ class DashboardPage extends React.Component {
                     <tbody>
                       {this.state.expenses && this.state.showMore
                         ? this.state.expenses.map((expense) => (
-                            <tr>
+                          <tr>
+                            {expense.type == 'Income' ? (
+                              <th scope='row' style={{ color: 'green' }}>
+                                {expense.type}
+                              </th>
+                            ) : (
+                              <th scope='row' style={{ color: 'red' }}>
+                                {expense.type}
+                              </th>
+                            )}
+                            <td>{expense.description}</td>
+                            <td>
+                              {expense.day} / {expense.month} / {expense.year}
+                            </td>
+                            <td>
                               {expense.type == 'Income' ? (
-                                <th scope='row' style={{ color: 'green' }}>
-                                  {expense.type}
-                                </th>
+                                <i className='fas fa-arrow-up text-success mr-3' />
                               ) : (
-                                <th scope='row' style={{ color: 'red' }}>
-                                  {expense.type}
-                                </th>
-                              )}
-                              <td>{expense.description}</td>
-                              <td>
-                                {expense.day} / {expense.month} / {expense.year}
-                              </td>
-                              <td>
-                                {expense.type == 'Income' ? (
-                                  <i className='fas fa-arrow-up text-success mr-3' />
-                                ) : (
-                                  <i className='fas fa-arrow-down text-warning mr-3' />
-                                )}{' '}
-                                {expense.amount}
-                              </td>
-                            </tr>
-                          ))
+                                <i className='fas fa-arrow-down text-warning mr-3' />
+                              )}{' '}
+                              {expense.amount}
+                            </td>
+                          </tr>
+                        ))
                         : this.state.expenses &&
-                          this.state.expenses.slice(0, 5).map((expense) => (
-                            <tr>
+                        this.state.expenses.slice(0, 5).map((expense) => (
+                          <tr>
+                            {expense.type == 'Income' ? (
+                              <th scope='row' style={{ color: 'green' }}>
+                                {expense.type}
+                              </th>
+                            ) : (
+                              <th scope='row' style={{ color: 'red' }}>
+                                {expense.type}
+                              </th>
+                            )}
+                            <td>{expense.description}</td>
+                            <td>
+                              {expense.day} / {expense.month} / {expense.year}
+                            </td>
+                            <td>
                               {expense.type == 'Income' ? (
-                                <th scope='row' style={{ color: 'green' }}>
-                                  {expense.type}
-                                </th>
+                                <i className='fas fa-arrow-up text-success mr-3' />
                               ) : (
-                                <th scope='row' style={{ color: 'red' }}>
-                                  {expense.type}
-                                </th>
-                              )}
-                              <td>{expense.description}</td>
-                              <td>
-                                {expense.day} / {expense.month} / {expense.year}
-                              </td>
-                              <td>
-                                {expense.type == 'Income' ? (
-                                  <i className='fas fa-arrow-up text-success mr-3' />
-                                ) : (
-                                  <i className='fas fa-arrow-down text-warning mr-3' />
-                                )}{' '}
-                                {expense.amount}
-                              </td>
-                            </tr>
-                          ))}
-                      {/* <tr>
-                      <th scope="row">{this.names[0]}</th>
-                      <td>4,569</td>
-                      <td>340</td>
-                      <td>
-                        <i className="fas fa-arrow-up text-success mr-3" />{" "}
-                        46,53%
-                      </td>
-                    </tr>
-                    <tr>
-                      <th scope="row">/argon/index.html</th>
-                      <td>3,985</td>
-                      <td>319</td>
-                      <td>
-                        <i className="fas fa-arrow-down text-warning mr-3" />{" "}
-                        46,53%
-                      </td>
-                    </tr>
-                    <tr>
-                      <th scope="row">/argon/charts.html</th>
-                      <td>3,513</td>
-                      <td>294</td>
-                      <td>
-                        <i className="fas fa-arrow-down text-warning mr-3" />{" "}
-                        36,49%
-                      </td>
-                    </tr>
-                    <tr>
-                      <th scope="row">/argon/tables.html</th>
-                      <td>2,050</td>
-                      <td>147</td>
-                      <td>
-                        <i className="fas fa-arrow-up text-success mr-3" />{" "}
-                        50,87%
-                      </td>
-                    </tr>
-                    <tr>
-                      <th scope="row">/argon/profile.html</th>
-                      <td>1,795</td>
-                      <td>190</td>
-                      <td>
-                        <i className="fas fa-arrow-down text-danger mr-3" />{" "}
-                        46,53%
-                      </td>
-                    </tr> */}
+                                <i className='fas fa-arrow-down text-warning mr-3' />
+                              )}{' '}
+                              {expense.amount}
+                            </td>
+                          </tr>
+                        ))}
                     </tbody>
                   </Table>
                 </Card>
               </Col>
-              {/* <Col xl="4">
-              <Card className="shadow">
-                <CardHeader className="border-0">
-                  <Row className="align-items-center">
-                    <div className="col">
-                      <h3 className="mb-0">Social traffic</h3>
-                    </div>
-                    <div className="col text-right">
-                      <Button
-                        color="primary"
-                        href="#pablo"
-                        onClick={e => e.preventDefault()}
-                        size="sm"
-                      >
-                        See all
-                      </Button>
-                    </div>
-                  </Row>
-                </CardHeader>
-                <Table className="align-items-center table-flush" responsive>
-                  <thead className="thead-light">
-                    <tr>
-                      <th scope="col">Referral</th>
-                      <th scope="col">Visitors</th>
-                      <th scope="col" />
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <th scope="row">Facebook</th>
-                      <td>1,480</td>
-                      <td>
-                        <div className="d-flex align-items-center">
-                          <span className="mr-2">60%</span>
-                          <div>
-                            <Progress
-                              max="100"
-                              value="60"
-                              barClassName="bg-gradient-danger"
-                            />
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Facebook</th>
-                      <td>5,480</td>
-                      <td>
-                        <div className="d-flex align-items-center">
-                          <span className="mr-2">70%</span>
-                          <div>
-                            <Progress
-                              max="100"
-                              value="70"
-                              barClassName="bg-gradient-success"
-                            />
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Google</th>
-                      <td>4,807</td>
-                      <td>
-                        <div className="d-flex align-items-center">
-                          <span className="mr-2">80%</span>
-                          <div>
-                            <Progress max="100" value="80" />
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Instagram</th>
-                      <td>3,678</td>
-                      <td>
-                        <div className="d-flex align-items-center">
-                          <span className="mr-2">75%</span>
-                          <div>
-                            <Progress
-                              max="100"
-                              value="75"
-                              barClassName="bg-gradient-info"
-                            />
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <th scope="row">twitter</th>
-                      <td>2,645</td>
-                      <td>
-                        <div className="d-flex align-items-center">
-                          <span className="mr-2">30%</span>
-                          <div>
-                            <Progress
-                              max="100"
-                              value="30"
-                              barClassName="bg-gradient-warning"
-                            />
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </Table>
-              </Card>
-            </Col> */}
             </Row>
           </Container>
           <Container fluid>

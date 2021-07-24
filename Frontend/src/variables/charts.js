@@ -1,33 +1,11 @@
-/*!
-
-=========================================================
-* Argon Dashboard React - v1.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-react
-* Copyright 2019 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 const Chart = require('chart.js');
-//
-// Chart extension for making the bars rounded
-// Code from: https://codepen.io/jedtrow/full/ygRYgo
-//
 
 Chart.elements.Rectangle.prototype.draw = function () {
   var ctx = this._chart.ctx;
   var vm = this._view;
   var left, right, top, bottom, signX, signY, borderSkipped, radius;
   var borderWidth = vm.borderWidth;
-  // Set Radius Here
-  // If radius is large enough to cause drawing errors a max radius is imposed
+
   var cornerRadius = 6;
 
   if (!vm.horizontal) {
@@ -459,7 +437,7 @@ let chartExample3 = {
         },
       },
     },
-  }
+  },
 };
 
 module.exports = {
@@ -468,5 +446,5 @@ module.exports = {
   chartExample1, // used inside src/views/Index.js
   chartExample2, // used inside src/views/Index.js
   colors,
-  chartExample3
+  chartExample3,
 };
