@@ -55,19 +55,23 @@ class Register extends React.Component {
 
 
     console.log(user)
-    const res = await axios.post('https://rpk-expense-tracker.herokuapp.com/register', user).then((response) => {
-      console.log(response)
-      this.setState({ ...this.state, registerSuccess: true })
-    }).catch((err) => {
-      console.log(err)
-    })
+    this.setState({ ...this.state, registerSuccess: true })
+    // const res = await axios.post('https://rpk-expense-tracker.herokuapp.com/register', user).then((response) => {
+    //   console.log(response)
+    //   this.setState({ ...this.state, registerSuccess: true })
+    // }).catch((err) => {
+    //   console.log(err)
+    // })
 
 
   }
 
   render() {
     if (this.state.registerSuccess) {
-      return <Redirect to='/login' />
+      return <Redirect to={{
+        pathname: '/login',
+        state: { username: this.state.registerUsername }
+      }} />
     }
 
     return (

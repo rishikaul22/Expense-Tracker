@@ -53,7 +53,7 @@ class User(db.Model):
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
-    username = db.Column(db.String(50),  nullable=False)
+    username = db.Column(db.String(50), nullable=False)
     password = db.Column(db.Text, nullable=False)
     expense = db.relationship(
         'Expense', backref='user', lazy=True)
@@ -100,7 +100,7 @@ class UserLogin(Resource):
         user = User.query.filter_by(username=data['username']).first()
 #         print(user.password)
         if user is None:
-            return {'message': 'User doesn\'t exist.'}
+            return {'message': 'User doesn\'t exist.'}, 402
         if user and safe_str_cmp(user.password, data['password']):
             access_token = create_access_token(
                 identity=user.id, expires_delta=datetime.timedelta(hours=30))
